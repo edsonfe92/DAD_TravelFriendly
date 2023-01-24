@@ -16,14 +16,14 @@ Funcionalidades públicas: al entrar sin registrase, el usuario podrá ver los v
 Funcionalidades privadas: al entrar el usuario con su cuenta, podrá reservar sitio en los viajes que se ofertan, consultar su historial de viajes, chatear con el conductor del viaje y hacer valoraciones de los conductores de sus viajes.
 
 Entidades:
--Usuario: es el cliente que reserva un sitio en un viaje.
--Conductor: oferta sitios en un viaje para que los usuarios lo adquieran.
--Viaje: el desplazamiento que oferta un conductor.
--Reserva: una vez reservado el viaje, el usuario tiene su reserva.
--Valoración: es la opinión que se hace de cualquier usuario de la aplicación. Los conductores hacen valoraciones de sus clientes y los clientes de los conductores.
+1. Usuario: es el cliente que reserva un sitio en un viaje.
+2. Conductor: oferta sitios en un viaje para que los usuarios lo adquieran.
+3. Viaje: el desplazamiento que oferta un conductor.
+4. Reserva: una vez reservado el viaje, el usuario tiene su reserva.
+5. Valoración: es la opinión que se hace de cualquier usuario de la aplicación. Los conductores hacen valoraciones de sus clientes y los clientes de los conductores.
 
 Funcionalidades servicio interno:
--Envío de correo de electrónico al registrarse un usuario.
--Envío de correo electrónico cuando el usuario indica que ha olvidado su contraseña.
--Generar reserva en el historial del usuario, al adquirir un sitio en un viaje.
--Chat entre conductor y usuario.
+1. Envío de correo de electrónico al registrarse un usuario.
+2. Envío de correo electrónico cuando el usuario indica que ha olvidado su contraseña.
+3. Generar reserva en el historial del usuario, al adquirir un sitio en un viaje.
+4. Chat entre conductor y usuario.
