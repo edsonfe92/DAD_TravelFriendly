@@ -6,6 +6,7 @@ Nombre del proyecto : Travel Friendly
 URL del repositorio de GitHub :  https://github.com/MegaTrece/DAD_TravelFriendly
 
 URL Trello : https://trello.com/b/41KZsuYL/travelfriendly
+
 Miembros del proyecto : Pedro Barquero Torres
                         Sergio López Elvira
 			Violeta Trujillo Almeida
