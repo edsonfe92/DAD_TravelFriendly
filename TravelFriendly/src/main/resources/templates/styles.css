@@ -1,0 +1,13 @@
+html{
+    background-color: rgb(20, 104, 239);
+}
+
+.appBar{
+    text-align: center;
+    color: antiquewhite;
+    background-color: brown;
+}
+
+.login{
+    text-align: center;
+}
