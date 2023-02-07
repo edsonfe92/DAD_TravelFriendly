@@ -1,5 +1,5 @@
 html{
-    background-color: rgb(20, 104, 239);
+    background-color: #929292;
 }
 
 *{
@@ -25,7 +25,7 @@ nav{
   nav ul{
      list-style: none;
      display: inline-block;
-     padding:17px;
+     padding: 17px;
   }
 
   nav ul li{
@@ -47,4 +47,16 @@ nav{
   .cuerpo{
     padding-top: 200px;
     text-align: center;
+  }
+
+  .formulario{
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .resBuscador{
+    text-align: center;
+    background-color: rgb(229, 229, 229);
+    width: 100%;
   }
