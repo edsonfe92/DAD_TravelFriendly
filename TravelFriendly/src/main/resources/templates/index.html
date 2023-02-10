@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Friendly</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
 </head>
 
 <body>
@@ -15,7 +15,7 @@
 
     <form action="Sesion"> <!-- Action es la url a donde se envian los datos-->
         <label for="user">Usuario</label><br>
-        <input type="text" name="use" id="user"><br>
+        <input type="text" name="user" id="user"><br>
         <label for="password">Contraseña</label><br>
         <input type="text" name="password" id="password"><br>
         <input type="submit" value="Entrar">
@@ -23,7 +23,9 @@
 
 </div>
 
-
+<div class="passwordMal" style="text-align: center; padding-top: 10px;">
+    <p style="color: rgb(205, 20, 20);">{{incorrecto}}</p>
+</div>
 
 </body>
 </html>
