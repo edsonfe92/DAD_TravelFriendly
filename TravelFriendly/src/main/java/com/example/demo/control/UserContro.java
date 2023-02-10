@@ -1,17 +1,13 @@
-package Control;
-
-import java.util.List;
+package com.example.demo.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
-import model.User;
-import repository.UserRepository;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 
-
-@RestController 
+@Controller 
 public class UserContro implements CommandLineRunner  {
 
 	@Autowired

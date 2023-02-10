@@ -1,24 +1,25 @@
 package com.example.demo;
 
-import model.User;
-import repository.UserRepository;
-
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 
 
 
-@RestController
+
+
+@Controller
 public class GreetingController {
 
 	
@@ -37,20 +38,30 @@ public class GreetingController {
 		return "greeting_template";
 	}
 	
-	@GetMapping("/Sesion")
-	public String Sesion(Model model, @RequestParam String user, @RequestParam String password) {
-		Optional<User> use = repo.findByName(user);
+	@GetMapping("/Sesion/{user}{password}")
+	public String Sesion(Model model, @PathVariable String user, @PathVariable String password) {
+		Optional<User> use = repo.findByUsername(user);
 		if(use.isPresent()) {
 			
-			model.addAttribute("name","Paco");
 			return "main";
 		}else {
 			
 			return "index";
 		}
-			
-	
 	}
+/*	@GetMapping("/Sesion/{id}")
+	public String showBook(Model model, @PathVariable String id) {
+
+		Optional<Book> book = bookService.findById(id);
+		if (book.isPresent()) {
+			model.addAttribute("book", book.get());
+			return "book";
+		} else {
+			return "books";
+		}
+
+	}*/
+	
 	@GetMapping("/")
 	public String Base(Model model) {
 		return "index";
