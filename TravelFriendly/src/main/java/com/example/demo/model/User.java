@@ -20,6 +20,8 @@ public class User {
 	public long getId() {
 		return id;
 	}
+	protected User() {} //Necesario para la BBDD
+	
 	public User(String username, String pass) {
 		this.username = username;
 		this.password = password;
