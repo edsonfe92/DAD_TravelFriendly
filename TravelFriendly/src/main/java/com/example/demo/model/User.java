@@ -3,6 +3,8 @@ import java.util.List;
 import javax.persistence.*;
 
 
+
+
 @Entity
 public class User {
 
@@ -14,7 +16,8 @@ public class User {
 	private String password;
 	// private List<Integer> valoraciones;
 
-
+	@ManyToMany(mappedBy="use")
+ 	private List<Trip> Ltrip;
 	
 	public long getId() {
 		return id;
@@ -41,7 +44,9 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public void addTrip(Trip p) {
+		Ltrip.add(p);
+	}
 	
 	
 }

@@ -1,9 +1,12 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Trip {
@@ -18,6 +21,9 @@ public class Trip {
 	private int sites; //plazas disponibles
 	private int stops; //número de paradas
 	private String info; //info relevante
+	
+	@ManyToMany
+ 	private List<User> use;
 	
 	protected Trip() {}
 	

@@ -22,17 +22,14 @@
 
 <div class="barraLateral" style="width: 35%; float: left;">
 
-    <div class="fila">
-        <button class="boton">chat1</button>
-    </div>
+    <h2>CHATS</h2>
+		<ul class="items">
+			{{#chats}}
+			<li><a href="/chat/{{id}}">{{origin}}-{{destiny}} </a></li>
+			{{/chats}}
+		</ul>
 
-    <div class="fila">
-        <button class="boton">chat2</button>
-    </div>
-
-    <div class="fila">
-        <button class="boton">chatN</button>
-    </div>
+		
 </div>
 
 <div class="chat" style="width: 63%; float: right;">
