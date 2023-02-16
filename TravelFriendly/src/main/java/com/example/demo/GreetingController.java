@@ -32,13 +32,9 @@ public class GreetingController {
 	@Autowired
 	private TripRepository repoTrip;
 	
-	@PostConstruct
-	public void init() {
-		repo.save(new User("Pepe", "a"));
-		repo.save(new User("Juan", "b"));
-		//repoTrip.save(new Trip("Madrid", "Badajoz", "12/09/2023",
-				//4, true, "viajesito"));
-	}
+	//Usuario que se encuentre iniciando la aplicacion
+	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
+	private User usuarioActual = new User();
 	
 	@GetMapping ("/greeting")
 	public String greeting(Model model) {
@@ -46,29 +42,18 @@ public class GreetingController {
 		return "greeting_template";
 	}
 	
-	/*@GetMapping("/Sesion/{user}{password}")
-	public String Sesion(Model model, @PathVariable String user, @PathVariable String password) {
-		Optional<User> use = repo.findByUsername(user);
-		if(use.isPresent()) {
-			
-			return "main";
-		}else {
-			
-			return "index";
-		}
-	}*/
-/*	@GetMapping("/Sesion/{id}")
-	public String showBook(Model model, @PathVariable String id) {
-
-		Optional<Book> book = bookService.findById(id);
-		if (book.isPresent()) {
-			model.addAttribute("book", book.get());
-			return "book";
-		} else {
-			return "books";
-		}
-
-	}*/
+	
+	@RequestMapping("/Sesion")
+	public String sesion(Model model, @RequestParam String user , @RequestParam String password ) {
+		
+		usuarioActual.setUsername(user);
+		usuarioActual.setPassword(password);
+		
+		repo.save(usuarioActual);
+		
+		model.addAttribute("name", user);
+		return "main";
+	}
 	
 	@GetMapping("/")
 	public String Base(Model model) {
@@ -102,9 +87,10 @@ public class GreetingController {
 	@GetMapping("/perfil")
 	public String Perfil(Model model) {
 		//User u = repo.findByUsername("Pepe");
-		Optional<User> u = repo.findByUsername("Juan");
-		model.addAttribute("name", u.get().getUsername());
+		//Optional<User> u = repo.findByUsername("Juan");
+		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
+		model.addAttribute("name",usuarioActual.getUsername());
 		return "profile";
 	}
 	

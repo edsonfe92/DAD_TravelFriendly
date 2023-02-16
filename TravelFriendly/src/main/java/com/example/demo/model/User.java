@@ -8,8 +8,8 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id; 
 	
+	private long id; 
 	private String username;
 	private String password;
 	// private List<Integer> valoraciones;
@@ -19,9 +19,10 @@ public class User {
 	public long getId() {
 		return id;
 	}
-	protected User() {} //Necesario para la BBDD
+	//protected User() {} //Necesario para la BBDD
 	
-	public User(String username, String pass) {
+	public User() {}
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
