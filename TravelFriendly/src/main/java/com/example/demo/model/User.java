@@ -11,7 +11,6 @@ public class User {
 	private long id; 
 	
 	private String username;
-	private String usuario;
 	private String password;
 	// private List<Integer> valoraciones;
 
@@ -34,12 +33,6 @@ public class User {
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 	public String getPassword() {
 		return password;

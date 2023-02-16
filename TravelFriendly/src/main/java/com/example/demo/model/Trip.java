@@ -16,13 +16,13 @@ public class Trip {
 	private String destiny; //destino
 	private String date; //fecha
 	private int sites; //plazas disponibles
-	private boolean stops; //viaje directo o no
+	private int stops; //número de paradas
 	private String info; //info relevante
 	
 	protected Trip() {}
 	
 	public Trip(String or, String dest, String date, 
-					int sites, boolean stops, String info) {
+					int sites, int stops, String info) {
 		this.origin = or;
 		this.destiny = dest;
 		this.date = date;
@@ -51,7 +51,7 @@ public class Trip {
 		return this.sites;
 	}
 	
-	public boolean getStops() {
+	public int getStops() {
 		return this.stops;
 	}
 	

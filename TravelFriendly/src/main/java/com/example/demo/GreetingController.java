@@ -111,8 +111,9 @@ public class GreetingController {
 	@RequestMapping("/accionPublicar")
 	public String publicar(Model model, @RequestParam String origin,
 			@RequestParam String destiny,  @RequestParam String date,
-			@RequestParam int sites, @RequestParam boolean stops, 
+			@RequestParam int sites, @RequestParam int stops, 
 			@RequestParam String info) {
+			
 		Trip t = new Trip(origin, destiny, date, sites, stops, info);
 		repoTrip.save(t);
 		return "publish";
