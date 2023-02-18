@@ -17,8 +17,9 @@ public class OpinionsControl implements CommandLineRunner   {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		repository.save(new Opinions("El viaje ha sido un poco mojón", new User("Pepe", "123"), new User("Laura", "444444")));
-		repository.save(new Opinions("El viaje ha estao chido", new User("Manolo", "123"), new User("Icenia", "444444")));
+	
+		//repository.save(new Opinions("El viaje ha sido un poco mojón", new User("Pepe", "123"), new User("Laura", "444444")));
+		//repository.save(new Opinions("El viaje ha estao chido", new User("Manolo", "123"), new User("Icenia", "444444")));
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
+import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
@@ -31,6 +32,9 @@ public class GreetingController {
 	
 	@Autowired
 	private TripRepository repoTrip;
+	
+	@Autowired
+	private OpinionsRepository repoOpinion;
 	
 	//Usuario que se encuentre iniciando la aplicacion
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
