@@ -14,11 +14,15 @@ public class User {
 	private long id; 
 	private String username;
 	private String password;
+	
 	// private List<Integer> valoraciones;
 
 	@ManyToMany(mappedBy="use")
  	private List<Trip> Ltrip;
 	
+	//Lista de opiniones que tiene la gente del usuario
+	@OneToMany 
+	private List <Opinions> opinions;
 	public long getId() {
 		return id;
 	}
