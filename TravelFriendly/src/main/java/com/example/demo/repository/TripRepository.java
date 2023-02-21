@@ -11,7 +11,7 @@ import com.example.demo.model.User;
 
 public interface TripRepository extends JpaRepository <Trip, Long>{
 
-	//Optional<Trip> findByOrigin(String origin);
+	Optional<Trip> findById(long id);
 	List<Optional<Trip>> findByOrigin(String origin);
 	List<Optional<Trip>> findByDestiny(String destiny);
 	List<Optional<Trip>> findByDate(String date);

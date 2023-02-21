@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.model.Booking;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
+import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
@@ -37,6 +39,9 @@ public class GreetingController {
 	
 	@Autowired
 	private OpinionsRepository repoOpinion;
+	
+	@Autowired
+	private BookingRepository repoBook;
 	
 	//Usuario que se encuentre iniciando la aplicacion
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
@@ -67,13 +72,13 @@ public class GreetingController {
 	}
 	
 	@GetMapping("/bienvenida")
-	public String Bienvenida(Model model) {
+	public String bienvenida(Model model) {
 		model.addAttribute("name", "Juan");
 		return "main";
 	}
 	
 	@GetMapping("/buscar")
-	public String Buscar(Model model) {
+	public String buscar(Model model) {
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "");
 		return "search";
@@ -154,5 +159,19 @@ public class GreetingController {
 		
 		
 		return "search"; 
+	}
+	
+	@RequestMapping("/accionReserva")
+	public String comprar(Model model, @RequestParam long id) {
+		
+		Optional<Trip> t = repoTrip.findById(id);
+		//t.get().buyTrip();
+		
+		Booking b = new Booking(t.get());
+		repoBook.save(b);
+		
+		model.addAttribute("searched", false);
+		model.addAttribute("error", "");
+		return "search";
 	}
 }
