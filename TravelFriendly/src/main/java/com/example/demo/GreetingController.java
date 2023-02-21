@@ -99,6 +99,8 @@ public class GreetingController {
 		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
 		model.addAttribute("name",usuarioActual.getUsername());
+		model.addAttribute("Trip", usuarioActual.getLtrip().toString());
+		
 		return "profile";
 	}
 	
@@ -108,8 +110,13 @@ public class GreetingController {
 			@RequestParam int sites, @RequestParam int stops, 
 			@RequestParam String info) {
 		
-			Trip t = new Trip(origin, destiny, date, sites, stops, info);
-			repoTrip.save(t);
+		
+		Trip t = new Trip(origin, destiny, date, sites, stops, info);
+		model.addAttribute("Trip", t);
+		usuarioActual.addTrip(t);
+		repoTrip.save(t);
+		
+	
 			return "publish";
 
 	}
