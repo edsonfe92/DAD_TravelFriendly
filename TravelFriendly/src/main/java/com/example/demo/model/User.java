@@ -23,7 +23,7 @@ public class User {
 	@ManyToMany(mappedBy="use")
  	private List<Trip> Ptrip= new ArrayList<Trip>();
 	@ManyToMany(mappedBy="use")
-	private List<Trip> Btrip= new ArrayList<Trip>();
+	private List<Booking> Btrip= new ArrayList<Booking>();
 	
 	@OneToMany
 	private List<Chat> chats;
@@ -62,7 +62,7 @@ public class User {
 		Ptrip.add(p);
 	}
 	
-	public void addTripB(Trip b) {
+	public void addTripB(Booking b) {
 		Btrip.add(b);
 	}
 	
@@ -71,7 +71,7 @@ public class User {
 		return Ptrip;
 	}
 	
-	public List<Trip> getBtrip() {
+	public List<Booking> getBtrip() {
 		return Btrip;
 	}
 	

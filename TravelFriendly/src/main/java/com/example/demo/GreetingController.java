@@ -116,7 +116,7 @@ public class GreetingController {
 		
 		model.addAttribute("name", usuarioActual.getUsername());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
-		
+		model.addAttribute("BTrip", usuarioActual.getBtrip());
 		
 		return "yourTravel";
 	}
@@ -171,7 +171,9 @@ public class GreetingController {
 		//t.get().buyTrip();
 		
 		Booking b = new Booking(t.get());
+		usuarioActual.addTripB(b);
 		repoBook.save(b);
+		
 		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "");
