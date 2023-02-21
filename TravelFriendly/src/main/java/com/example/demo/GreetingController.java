@@ -85,12 +85,14 @@ public class GreetingController {
 		return "publish";
 	}
 	
-	@GetMapping("/chat")
+	@RequestMapping("/chat")
 	public String Chat(Model model) {
 		
 		model.addAttribute("chats", repoTrip.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		return "chat";
 	}
+	
+	
 	
 	@GetMapping("/perfil")
 	public String Perfil(Model model) {
