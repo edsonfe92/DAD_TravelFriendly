@@ -17,25 +17,25 @@
         <li><a href="/publicar">Publicar</a></li>
         <li><a href="/chat">Chat</a></li>
         <li><a href="/perfil">Perfil</a></li>
-         <li><a href="/tusViajes">Tus Viajes</a></li>
+        <li><a href="/tusViajes">Tus Viajes</a></li>
     </ul>
 </nav>
 
-<div class="barraLateral" style="width: 35%; float: left;">
+<div class="perfil">
+    <div class="fila">
+        <div class="titulo"></div> {{name}}
+    </div>
 
+    <div class="fila">
+        <button class="boton">Ver Viajes:</button> 
+    </div>
+    
     <h2>CHATS</h2>
 		<ul class="items">
-			{{#chats}}
-			<li><a href="/chat/{{id}}">{{origin}}-{{destiny}} </a></li>
-			{{/chats}}
+			
+			<li><a href="/tusViajes/">{{Trip}} </a></li>
+			
 		</ul>
-
-		
-</div>
-
-<div class="chat" style="width: 63%; float: right;">
-
-    Aquí salen los mensajes del chat
 
 </div>
 

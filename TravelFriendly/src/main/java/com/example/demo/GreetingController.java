@@ -99,9 +99,18 @@ public class GreetingController {
 		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
 		model.addAttribute("name",usuarioActual.getUsername());
-		model.addAttribute("Trip", usuarioActual.getLtrip().toString());
+		
 		
 		return "profile";
+	}
+	
+	@GetMapping("/tusViajes")
+	public String tusViajes(Model model) {
+		
+		model.addAttribute("name", usuarioActual.getUsername());
+		model.addAttribute("Trip", usuarioActual.getLtrip().toString());
+		
+		return "yourTravel";
 	}
 	
 	@RequestMapping("/accionPublicar")
