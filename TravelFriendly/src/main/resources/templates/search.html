@@ -41,7 +41,10 @@
 				<div class="titulo">Origen: </div>{{origin}} 
 				<div class="titulo">Destino: </div>{{destiny}} 
 				<div class="titulo">Fecha: </div>{{date}}
-				<button>Comprar</button>
+				<form method="post" action="/accionReserva">
+					<input style="display: none;" type="text" name="id" id="id" value={{id}}>
+					<input type="submit" value="Reservar Sitio">
+				</form>
 			</li>
 		{{/resultados}}	
 	</ul>
