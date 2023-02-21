@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -18,7 +19,8 @@ public class User {
 	// private List<Integer> valoraciones;
 
 	@ManyToMany(mappedBy="use")
- 	private List<Trip> Ltrip;
+ 	private List<Trip> Ltrip= new ArrayList<Trip>();
+	
 	
 	//Lista de opiniones que tiene la gente del usuario
 	@OneToMany 
@@ -48,8 +50,14 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	public void addTrip(Trip p) {
 		Ltrip.add(p);
+	}
+	
+	
+	public List<Trip> getLtrip() {
+		return Ltrip;
 	}
 	
 	
