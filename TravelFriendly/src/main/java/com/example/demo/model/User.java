@@ -22,7 +22,7 @@ public class User {
 
 	@ManyToMany(mappedBy="use")
  	private List<Trip> Ptrip= new ArrayList<Trip>();
-	@ManyToMany(mappedBy="use")
+	@ManyToMany
 	private List<Booking> Btrip= new ArrayList<Booking>();
 	
 	@OneToMany
