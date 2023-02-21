@@ -2,6 +2,8 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import com.example.demo.model.Chat;
+
 
 
 
@@ -20,6 +22,9 @@ public class User {
 
 	@ManyToMany(mappedBy="use")
  	private List<Trip> Ltrip= new ArrayList<Trip>();
+	
+	@OneToMany
+	private List<Chat> chats;
 	
 	
 	//Lista de opiniones que tiene la gente del usuario
