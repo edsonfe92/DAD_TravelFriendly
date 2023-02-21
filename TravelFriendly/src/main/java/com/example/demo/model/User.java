@@ -21,7 +21,9 @@ public class User {
 	// private List<Integer> valoraciones;
 
 	@ManyToMany(mappedBy="use")
- 	private List<Trip> Ltrip= new ArrayList<Trip>();
+ 	private List<Trip> Ptrip= new ArrayList<Trip>();
+	@ManyToMany(mappedBy="use")
+	private List<Trip> Btrip= new ArrayList<Trip>();
 	
 	@OneToMany
 	private List<Chat> chats;
@@ -56,14 +58,23 @@ public class User {
 		this.password = password;
 	}
 	
-	public void addTrip(Trip p) {
-		Ltrip.add(p);
+	public void addTripP(Trip p) {
+		Ptrip.add(p);
+	}
+	
+	public void addTripB(Trip b) {
+		Btrip.add(b);
 	}
 	
 	
-	public List<Trip> getLtrip() {
-		return Ltrip;
+	public List<Trip> getPtrip() {
+		return Ptrip;
 	}
+	
+	public List<Trip> getBtrip() {
+		return Btrip;
+	}
+	
 	
 	
 }

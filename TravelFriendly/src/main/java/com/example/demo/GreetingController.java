@@ -107,8 +107,11 @@ public class GreetingController {
 	@GetMapping("/tusViajes")
 	public String tusViajes(Model model) {
 		
+		
+		
 		model.addAttribute("name", usuarioActual.getUsername());
-		model.addAttribute("Trip", usuarioActual.getLtrip().toString());
+		model.addAttribute("PTrip", usuarioActual.getPtrip());
+		
 		
 		return "yourTravel";
 	}
@@ -121,8 +124,8 @@ public class GreetingController {
 		
 		
 		Trip t = new Trip(origin, destiny, date, sites, stops, info);
-		model.addAttribute("Trip", t);
-		usuarioActual.addTrip(t);
+		model.addAttribute("PTrip", t);
+		usuarioActual.addTripP(t);
 		repoTrip.save(t);
 		
 	
