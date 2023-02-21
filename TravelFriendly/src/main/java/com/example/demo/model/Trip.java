@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Trip {
@@ -23,7 +24,10 @@ public class Trip {
 	private String info; //info relevante
 	
 	@ManyToMany
- 	private List<User> use;
+ 	private List<User> use; //Usuarios que van a realizar el viaje //la primera posicion se va a corresponder a la del condunctor
+	
+	@OneToMany
+	private List<Chat> chats;
 	
 	protected Trip() {}
 	
