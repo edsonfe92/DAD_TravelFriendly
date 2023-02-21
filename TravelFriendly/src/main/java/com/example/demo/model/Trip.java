@@ -64,4 +64,8 @@ public class Trip {
 	public String getInfo() {
 		return this.info;
 	}
+	
+	public void buyTrip() {
+		this.sites--;
+	}
 }

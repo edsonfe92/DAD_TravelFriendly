@@ -22,13 +22,34 @@
 
 <div class="formulario">
     <form action="/accionBuscador">
-        <input type="text" name="search" id="search">
-        <input type="submit" value="Buscar">
+		<label for="origin">Origen: </label>
+		<input type="text" name="origin" id="origin">
+		<label for="destiny">Destino: </label>
+		<input type="text" name="destiny" id="destiny">
+		<label for="origin">Fecha: </label>
+        <input type="date" name="date" id="date">
+        <input type="submit" value="Buscar"><br>
     </form>
 </div>
 
 <div class="resBuscador">
-    <p>{{resultados}}</p>
+    {{#searched}}
+    <ul>
+		{{#resultados}}
+			<li style="border-style: solid; border-width: 2px;">
+				<div class="titulo">Origen: </div>{{origin}} 
+				<div class="titulo">Destino: </div>{{destiny}} 
+				<div class="titulo">Fecha: </div>{{date}}
+				<button>Comprar</button>
+			</li>
+		{{/resultados}}	
+	</ul>
+	{{/searched}}
+	{{^searched}}
+    <ul>
+		{{error}}
+	</ul>
+	{{/searched}}
 </div>
 
 </body>

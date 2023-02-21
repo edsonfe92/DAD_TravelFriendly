@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -72,7 +74,8 @@ public class GreetingController {
 	
 	@GetMapping("/buscar")
 	public String Buscar(Model model) {
-		model.addAttribute("resultados", "Aquí saldrían los viajes, hay que añadir movidas Mustache");
+		model.addAttribute("searched", false);
+		model.addAttribute("error", "");
 		return "search";
 	}
 	
@@ -104,15 +107,36 @@ public class GreetingController {
 			@RequestParam String destiny,  @RequestParam String date,
 			@RequestParam int sites, @RequestParam int stops, 
 			@RequestParam String info) {
-			
-		Trip t = new Trip(origin, destiny, date, sites, stops, info);
-		repoTrip.save(t);
-		return "publish";
+		
+			Trip t = new Trip(origin, destiny, date, sites, stops, info);
+			repoTrip.save(t);
+			return "publish";
+
 	}
 	
 	@RequestMapping("/accionBuscador")
-	public String buscar(Model model, @RequestParam String search) {
-		model.addAttribute("resultados", search);
+	public String buscar(Model model, @RequestParam String origin,
+						@RequestParam String destiny, @RequestParam String date) {
+		
+		List <Optional<Trip>> tripDate = repoTrip.findByDate(date); //consultamos a la BD por fecha (así evitamos problemas de mayúsculas)
+		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
+		
+		for(int i = 0; i < tripDate.size(); i++) {
+			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))) {
+				tripOutput.add(tripDate.get(i).get());
+			}
+		}
+		
+		if(tripOutput.size()>0) {
+			model.addAttribute("searched", true);
+			model.addAttribute("resultados", tripOutput);
+		}
+		else {
+			model.addAttribute("searched", false);
+			model.addAttribute("error", "No se han encontrado resultados");
+		}
+		
+		
 		return "search"; 
 	}
 }

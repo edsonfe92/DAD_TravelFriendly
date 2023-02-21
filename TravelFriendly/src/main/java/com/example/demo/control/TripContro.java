@@ -15,8 +15,8 @@ import com.example.demo.repository.TripRepository;
 		
 		@Override
 		public void run(String... args) throws Exception {
-		repository.save(new Trip("Badajoz", "Madrid","17-02-2023",1,1,"vamonos"));
-		repository.save(new Trip("Montijo", "Caceres","19-03-2023",1,1,"paseito"));
+		repository.save(new Trip("Badajoz", "Madrid","2023-02-17",1,1,"vamonos"));
+		repository.save(new Trip("Montijo", "Caceres","2023-03-19",1,1,"paseito"));
 
 
 		}
