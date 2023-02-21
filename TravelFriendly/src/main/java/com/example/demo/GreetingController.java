@@ -103,7 +103,11 @@ public class GreetingController {
 		return "chat";
 	}
 	
-	
+	@GetMapping("/chat/{id}")
+	public String Chats(Model model,@PathVariable long id) {
+		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
+		return "chats";
+	}
 	
 	
 	@GetMapping("/perfil")
@@ -188,6 +192,8 @@ public class GreetingController {
 		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
 		
 		repoChat.save(c);
+		
+		
 		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "");
