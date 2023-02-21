@@ -27,14 +27,26 @@
     </div>
 
     <div class="fila">
-        <button class="boton">Ver Viajes:</button> 
+        <button class="boton">Tus Viajes</button> 
     </div>
     
-    <h2>CHATS</h2>
-		<ul class="items">
+    <h4 TUS VIAJES class= "titulo" >
+		<ul class="formulario">
 			
-			<li><a href="/tusViajes/">{{Trip}} </a></li>
-			
+		
+
+   				
+						<div class="chat" style="width: 100%; float: none;">
+				{{#PTrip}}
+					<li>[{{id}}]: Tu viaje de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
+					<br>
+				{{/PTrip}}	
+				
+			</li>
+	
+
+			</div>
+			<br>
 		</ul>
 
 </div>

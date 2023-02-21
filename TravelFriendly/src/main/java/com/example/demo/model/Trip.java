@@ -67,9 +67,7 @@ public class Trip {
 		return this.stops;
 	}
 	
-	public String toString() {
-		return "El viaje tiene origen en: "+this.origin+" y destino en: "+this.destiny ;
-	}
+	
 	public String getInfo() {
 		return this.info;
 	}
