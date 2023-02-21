@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 </head>
 
-<body>
+<div>
 
 <div class="appBar"><h1>Travel Friendly</h1></div>
 
@@ -35,9 +35,16 @@
 
 <div class="chat" style="width: 63%; float: right;">
 
-    Aquí salen los mensajes del chat
+    <form method="post" action="/publicarChat">
+		
+		<label for="Mensaje"> Mensaje </label><br>
+		<input type="text" name="mensaje"><br>
+	    <input type="submit" value="Publicar mensaje">
+		
+	</form>
 
 </div>
+
 
 </body>
 </html>
