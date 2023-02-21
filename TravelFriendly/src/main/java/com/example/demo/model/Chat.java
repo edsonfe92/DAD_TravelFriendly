@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -18,14 +19,26 @@ public class Chat {
 	
 
 	
-	public String mensajes;
+	public String mensajes ="";
+	@ManyToOne
+	private User conductor;
+	@ManyToOne
+	private User pasajero;
 	
+	private String descripcion=""; 
 	
-	public Chat() {
-					
+	public Chat() {}
+	
+	public Chat(User conductor, User pasajero) {
+					this.conductor=conductor;
+					this.pasajero= pasajero;
 	}
 	
-	/*public void addMensaje(String m) {
-		mensajes.add(m);
-	}*/
+	public void addMensaje(String m, User u) {
+		this.mensajes += u.getUsername()+" : "+m+"\n";
+	}
+	
+	public void setDescripcion(String origen, String destino, String usuario ) {
+		descripcion = origen+" - " + destino+" - "+usuario;
+	}
 }

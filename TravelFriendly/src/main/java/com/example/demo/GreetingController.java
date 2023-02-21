@@ -23,6 +23,9 @@ import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
+import com.example.demo.model.Chat;
+import com.example.demo.repository.ChatRepository;
+
 
 
 
@@ -42,6 +45,9 @@ public class GreetingController {
 	
 	@Autowired
 	private BookingRepository repoBook;
+	
+	@Autowired
+	private ChatRepository repoChat;
 	
 	//Usuario que se encuentre iniciando la aplicacion
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
@@ -93,9 +99,10 @@ public class GreetingController {
 	@RequestMapping("/chat")
 	public String Chat(Model model) {
 		
-		model.addAttribute("chats", repoTrip.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
+		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		return "chat";
 	}
+	
 	
 	
 	
@@ -132,6 +139,8 @@ public class GreetingController {
 		
 		Trip t = new Trip(origin, destiny, date, sites, stops, info);
 		model.addAttribute("PTrip", t);
+		t.SetConductor(usuarioActual);
+		
 		usuarioActual.addTripP(t);
 		repoTrip.save(t);
 		
@@ -174,6 +183,11 @@ public class GreetingController {
 		
 		Booking b = new Booking(t.get());
 		repoBook.save(b);
+		
+		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
+		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
+		
+		repoChat.save(c);
 		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "");

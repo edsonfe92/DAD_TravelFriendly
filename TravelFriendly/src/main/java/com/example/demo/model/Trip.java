@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Trip {
@@ -22,6 +23,11 @@ public class Trip {
 	private int sites; //plazas disponibles
 	private int stops; //número de paradas
 	private String info; //info relevante
+	
+	@OneToOne
+	private User conductor;
+	
+	private String nombreconductor=""; // Para el chat 
 	
 	@ManyToMany
  	private List<User> use; //Usuarios que van a realizar el viaje //la primera posicion se va a corresponder a la del condunctor
@@ -39,9 +45,12 @@ public class Trip {
 		this.sites = sites;
 		this.stops = stops;
 		this.info = info;
+		
 	}
 	
-	
+	public void AddChat(Chat c) {
+		chats.add(c);
+	}
 	
 	public long getId() {
 		return this.id;
@@ -74,5 +83,17 @@ public class Trip {
 	
 	public void buyTrip() {
 		this.sites--;
+	}
+	
+	public User GetConductor() {
+		return conductor;
+	}
+	public void SetConductor(User s) {
+		this.conductor = s ; 
+		nombreconductor = this.conductor.getUsername();
+				
+	}
+	public void SetUsersinTrip(User s) {
+		use.add(s);
 	}
 }
