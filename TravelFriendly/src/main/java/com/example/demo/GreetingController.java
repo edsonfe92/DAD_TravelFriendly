@@ -145,7 +145,7 @@ public class GreetingController {
 		
 		model.addAttribute("name", usuarioActual.getUsername());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
-		
+		model.addAttribute("BTrip", usuarioActual.getBtrip());
 		
 		return "yourTravel";
 	}
@@ -203,7 +203,7 @@ public class GreetingController {
 		
 		for(int i = 0; i < tripDate.size(); i++) {
 			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))
-					&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())) {
+					/*&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())*/) {
 				
 				tripOutput.add(tripDate.get(i).get());
 			}
@@ -232,15 +232,20 @@ public class GreetingController {
 		//repoTrip.updateSites(t.get());
 		
 		Booking b = new Booking(usuarioActual, t.get());
-		repoBook.save(b);
+		
+		model.addAttribute("BTrip", t.get().GetConductor());
 		
 		
 		usuarioActual.addTripB(b);
+	
+		repoBook.save(b);
 		
-		//Chat c = new Chat(t.get().GetConductor(), usuarioActual);
-		//c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
+		
+		
+		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
+		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
 		//ACORDARSE DE DESCOMENTAR ESTO
-		//repoChat.save(c);
+	repoChat.save(c);
 		
 		
 		

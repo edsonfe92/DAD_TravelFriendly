@@ -40,10 +40,17 @@
 				{{#PTrip}}
 					<li>[{{id}}]: Tu viaje de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
 					<br>
-					Opinar sobre el conductor:    
+					Opinar sobre el pasajero:    
 						<li><a href="/opinar"> {{name}} </a></li>
 					
 				{{/PTrip}}	
+				{{#BTrip}}
+					<li>[{{id}}]: Tu reserva de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
+					<br>
+					Opinar sobre el conductor:    
+						<li><a href="/opinar"> {{name}} </a></li>
+					
+				{{/BTrip}}	
 				
 				
 			</li>
