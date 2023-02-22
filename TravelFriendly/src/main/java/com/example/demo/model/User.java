@@ -66,6 +66,10 @@ public class User {
 		Btrip.add(b);
 	}
 	
+	public void addOpinion(Opinions o) {
+		opinions.add(o);
+	}
+	
 	
 	public List<Trip> getPtrip() {
 		return Ptrip;
@@ -73,6 +77,10 @@ public class User {
 	
 	public List<Booking> getBtrip() {
 		return Btrip;
+	}
+	
+	public List<Opinions> getOpinions() {
+		return opinions;
 	}
 	
 	

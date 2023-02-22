@@ -24,6 +24,7 @@ import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
 import com.example.demo.model.Chat;
+import com.example.demo.model.Opinions;
 import com.example.demo.repository.ChatRepository;
 
 
@@ -117,7 +118,7 @@ public class GreetingController {
 		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
 		model.addAttribute("name",usuarioActual.getUsername());
-		
+		model.addAttribute("Opinions", usuarioActual.getOpinions());
 		
 		return "profile";
 	}
@@ -132,6 +133,31 @@ public class GreetingController {
 		
 		
 		return "yourTravel";
+	}
+	
+	@GetMapping("/opinar")
+	public String opinar(Model model) {
+		
+		model.addAttribute("name", usuarioActual.getUsername());
+		
+		
+		
+		return "opinion";
+	}
+	
+	@RequestMapping("/accionOpinar")
+	public String accionOpinar(Model model, @RequestParam String text ,@RequestParam User origin,
+			@RequestParam User destiny) {
+		
+		
+		model.addAttribute("name", usuarioActual.getUsername());
+		
+		Opinions o = new Opinions(text,origin,destiny);
+		model.addAttribute("Opinions", o);
+		usuarioActual.addOpinion(o);
+		repoOpinion.save(o);
+		
+		return "opinion";
 	}
 	
 	@RequestMapping("/accionPublicar")

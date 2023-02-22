@@ -27,7 +27,7 @@
     </div>
 
     <div class="fila">
-        <button class="boton">Tus Viajes</button> 
+        <button class="boton">Realiza tu opinión sobre: {{name}}</button> 
     </div>
     
     <h4 TUS VIAJES class= "titulo" >
@@ -36,14 +36,20 @@
 		
 
    				
-						<div class="chat" style="width: 100%; float: none;">
-				{{#PTrip}}
-					<li>[{{id}}]: Tu viaje de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
-					<br>
-					Opinar sobre el conductor:    
-						<li><a href="/opinar"> {{name}} </a></li>
-					
-				{{/PTrip}}	
+<div class="opinion" style="width: 100%; float: none;">
+				
+
+
+    <form method="post" action="/accionOpinar">
+		
+		<label for="Mensaje"> Mensaje </label><br>
+		<input type="text" name="mensaje"><br>
+	    <input type="submit" value="Publicar opinion">
+		
+	</form>
+
+</div>
+				
 				
 				
 			</li>
