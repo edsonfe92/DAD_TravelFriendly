@@ -15,11 +15,11 @@ public class UserContro implements CommandLineRunner  {
 	
 	@Override
 	public void run(String... args) throws Exception {
-	repository.save(new User("Jack", "Bauer"));
+	/*repository.save(new User("Jack", "Bauer"));
 	repository.save(new User("Chloe", "O'Brian"));
 	repository.save(new User("Kim", "Bauer"));
 	repository.save(new User("David", "Palmer"));
-	repository.save(new User("Michelle", "Dessler"));
+	repository.save(new User("Michelle", "Dessler"));*/
 
 	}
 	

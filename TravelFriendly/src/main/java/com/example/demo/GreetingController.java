@@ -209,8 +209,7 @@ public class GreetingController {
 			}
 		}
 		
-	
-		
+
 		if(tripOutput.size()>0) {
 			model.addAttribute("searched", true);
 			model.addAttribute("resultados", tripOutput);
@@ -237,10 +236,10 @@ public class GreetingController {
 		
 		usuarioActual.addTripB(b);
 		
-		//Chat c = new Chat(t.get().GetConductor(), usuarioActual);
-		//c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
-		//ACORDARSE DE DESCOMENTAR ESTO
-		//repoChat.save(c);
+		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
+		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
+		
+		repoChat.save(c);
 		
 		
 		
