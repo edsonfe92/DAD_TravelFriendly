@@ -31,3 +31,10 @@ Funcionalidades servicio interno:
 2. Envío de correo electrónico cuando el usuario indica que ha olvidado su contraseña.
 3. Generar reserva en el historial del usuario, al adquirir un sitio en un viaje.
 4. Chat entre conductor y usuario.
+
+## Fase_2
+### Diagrama_E-R
+![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/e-r.jpg)
+
+### Diagrama_UML
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/uml.jpeg)
