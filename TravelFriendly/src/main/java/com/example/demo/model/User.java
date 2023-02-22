@@ -31,7 +31,7 @@ public class User {
 	
 	//Lista de opiniones que tiene la gente del usuario
 	@OneToMany 
-	private List <Opinions> opinions;
+	private List <Opinions> opinions = new ArrayList<Opinions>();;
 	public long getId() {
 		return id;
 	}

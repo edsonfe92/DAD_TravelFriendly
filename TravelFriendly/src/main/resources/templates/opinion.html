@@ -27,7 +27,7 @@
     </div>
 
     <div class="fila">
-        <button class="boton">Realiza tu opinión sobre: {{name}}</button> 
+        <button class="boton">Realiza tu opinión sobre: {{Conductor}}</button> 
     </div>
     
     <h4 TUS VIAJES class= "titulo" >
@@ -42,20 +42,13 @@
 
     <form method="post" action="/accionOpinar">
 		
-		<label for="Mensaje"> Mensaje </label><br>
-		<input type="text" name="mensaje"><br>
+		<label for="Mensaje"> Enviar Opinion </label><br>
+		<input type="text" name="text"><br>
+		<input style="display: none;" type="text" name="id" id="id" value={{id}}>
 	    <input type="submit" value="Publicar opinion">
 		
 	</form>
 
-</div>
-				
-				
-				
-			</li>
-	
-
-			</div>
 			<br>
 		</ul>
 

@@ -15,7 +15,7 @@ public class Opinions {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id; 
-	private String text;
+	private String text="";
 	@OneToOne
 	private User orig, dest;
 	
@@ -34,7 +34,13 @@ public class Opinions {
 	public String getText() {
 		return text;
 	}
+	public User getOrigin() {
+		return this.orig;
+	}
 	
+	public User getDestiny() {
+		return this.dest;
+	}
 	public void setOpinion(String text) {
 		this.text=text;
 	}
