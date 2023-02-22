@@ -102,13 +102,28 @@ public class GreetingController {
 		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		return "chat";
 	}
+	long idantiguo;
 	
 	@GetMapping("/chat/{id}")
 	public String Chats(Model model,@PathVariable long id) {
 		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
+		Optional<Chat> chat = repoChat.findById(id);
+		model.addAttribute("mensajes",chat.get().mensajes);
+		idantiguo=id;
 		return "chats";
 	}
 	
+	@GetMapping("/chat/SaveChats")
+	public String MensajeS(Model model, @RequestParam String mensaje ) {
+		model.addAttribute("chats", repoChat.findAll());
+      Optional<Chat> chat = repoChat.findById(idantiguo);
+      chat.get().addMensaje(mensaje, usuarioActual);
+		repoChat.save(chat.get());
+		return("SaveMessage");
+	}
+	//Si creo una entidad mensaje  y esta va a contener el id del chat al que pertenecen. De esta forma podre buscar 
+	//todos los mensajes pertenecientes a un chat en concreto atraves de su repositorio 
+	//ESta sera la unica forma e la cual podre listar (ya que no funcionan las listas) todos los mensajes pertenecientes a un chat
 	
 	@GetMapping("/perfil")
 	public String Perfil(Model model) {

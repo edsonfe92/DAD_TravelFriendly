@@ -35,7 +35,7 @@ public class Chat {
 	}
 	
 	public void addMensaje(String m, User u) {
-		this.mensajes += u.getUsername()+" : "+m+"\n";
+		this.mensajes += u.getUsername()+" : "+m+".\r\n";
 	}
 	
 	public void setDescripcion(String origen, String destino, String usuario ) {
