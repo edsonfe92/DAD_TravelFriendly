@@ -103,6 +103,7 @@ public class GreetingController {
 		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		return "chat";
 	}
+	
 	long idantiguo;
 	
 	@GetMapping("/chat/{id}")
@@ -190,7 +191,7 @@ public class GreetingController {
 		repoTrip.save(t);
 		
 	
-			return "publish";
+		return "publish";
 
 	}
 	
@@ -202,8 +203,10 @@ public class GreetingController {
 		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
 		
 		for(int i = 0; i < tripDate.size(); i++) {
-			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))
-					/*&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())*/) {
+			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))
+					&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))
+					&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())
+					&&(tripDate.get(i).get().getSites()>0)) {
 				
 				tripOutput.add(tripDate.get(i).get());
 			}
@@ -227,8 +230,8 @@ public class GreetingController {
 	public String comprar(Model model, @RequestParam long id) {
 		
 		Optional<Trip> t = repoTrip.findById(id);
-		//t.get().buyTrip();
-		//repoTrip.updateSites(t.get());
+		t.get().buyTrip();
+		repoTrip.save(t.get());
 		
 		Booking b = new Booking(usuarioActual, t.get());
 		
