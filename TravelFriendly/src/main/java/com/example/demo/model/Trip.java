@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -24,7 +25,7 @@ public class Trip {
 	private int stops; //número de paradas
 	private String info; //info relevante
 	
-	@OneToOne
+	@ManyToOne
 	private User conductor;
 	
 	private String nombreconductor=""; // Para el chat 
@@ -95,5 +96,9 @@ public class Trip {
 	}
 	public void SetUsersinTrip(User s) {
 		use.add(s);
+	}
+	
+	public long getConductorId() {
+		return this.conductor.getId();
 	}
 }

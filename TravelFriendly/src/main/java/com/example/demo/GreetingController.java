@@ -202,10 +202,14 @@ public class GreetingController {
 		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
 		
 		for(int i = 0; i < tripDate.size(); i++) {
-			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))) {
+			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))
+					&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())) {
+				
 				tripOutput.add(tripDate.get(i).get());
 			}
 		}
+		
+	
 		
 		if(tripOutput.size()>0) {
 			model.addAttribute("searched", true);
@@ -225,14 +229,18 @@ public class GreetingController {
 		
 		Optional<Trip> t = repoTrip.findById(id);
 		//t.get().buyTrip();
+		//repoTrip.updateSites(t.get());
 		
-		Booking b = new Booking(t.get());
+		Booking b = new Booking(usuarioActual, t.get());
 		repoBook.save(b);
 		
-		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
-		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
 		
-		repoChat.save(c);
+		usuarioActual.addTripB(b);
+		
+		//Chat c = new Chat(t.get().GetConductor(), usuarioActual);
+		//c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
+		//ACORDARSE DE DESCOMENTAR ESTO
+		//repoChat.save(c);
 		
 		
 		

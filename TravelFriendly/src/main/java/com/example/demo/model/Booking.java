@@ -14,11 +14,16 @@ public class Booking {
 	private long id; 
 	
 	@ManyToOne
+	private User user;
+	
+	@ManyToOne
 	private Trip trip;
+	
 	
 	protected Booking(){}
 	
-	public Booking(Trip trip) {
+	public Booking(User user, Trip trip) {
+		this.user=user;
 		this.trip = trip;
 	}
 	
