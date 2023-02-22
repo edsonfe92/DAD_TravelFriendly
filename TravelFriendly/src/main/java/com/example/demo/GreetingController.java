@@ -239,19 +239,14 @@ public class GreetingController {
 	
 		repoBook.save(b);
 		
-<<<<<<< HEAD
-		
+
 		
 		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
 		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
-		//ACORDARSE DE DESCOMENTAR ESTO
-	repoChat.save(c);
-=======
-		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
-		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
-		
 		repoChat.save(c);
->>>>>>> eac9ca998e1cb53ed107d938d14fcb56b7091d8f
+
+		
+
 		
 		
 		
