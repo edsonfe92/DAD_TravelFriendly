@@ -31,10 +31,11 @@
         <button class="boton">Tus opiniones</button>
         <div class="chat" style="width: 100%; float: none;">
 				{{#Opinions}}
-					<li>Tu opinion de:  {{origin}} es: {{text}}  </li>
+				{{#opin}}
+					<li>Tu opinion sobre {{username}} es: {{text}}  </li>
 					<br>
 					
-					
+					{{/opin}}
 				{{/Opinions}}	
 				
 				

@@ -133,8 +133,17 @@ public class GreetingController {
 		//Optional<User> u = repo.findByUsername("Juan");
 		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
-		model.addAttribute("name",usuarioActual.getUsername());
-		model.addAttribute("Opinions", usuarioActual.getOpinions());
+		
+		List<User> u = new ArrayList<User>();
+		List<Opinions> o = new ArrayList<Opinions>();
+		for(int i=0;i<usuarioActual.getOpinions().size();i++) {
+			u.add(usuarioActual.getOpinions().get(i).getDestiny());
+			o.add(usuarioActual.getOpinions().get(i));
+		}
+		
+		model.addAttribute("name", usuarioActual.getUsername());
+		model.addAttribute("Opinions", u);
+		model.addAttribute("opin", o);
 		
 		return "profile";
 	}
@@ -144,36 +153,56 @@ public class GreetingController {
 		
 		
 		
+		List<Trip> t = new ArrayList<Trip>();
+		List<String> c = new ArrayList<String>();
+		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
+			t.add(usuarioActual.getBtrip().get(i).getTrip());
+		}
+		
+		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
+			c.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getUsername());
+		}
 		model.addAttribute("name", usuarioActual.getUsername());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
-		model.addAttribute("BTrip", usuarioActual.getBtrip());
-		
+		model.addAttribute("BTrip", t);
+		model.addAttribute("Conductor", c);
+	
 		return "yourTravel";
 	}
 	
 	@GetMapping("/opinar")
 	public String opinar(Model model) {
 		
+		
+		Optional <Booking> b = repoBook.findByUser_Id(usuarioActual.getId());
+		Optional<Trip> trip= repoTrip.findById(b.get().getTrip().getId());
+		Optional<User> userC= repo.findById(trip.get().getConductorId());
 		model.addAttribute("name", usuarioActual.getUsername());
-		
-		
+		model.addAttribute("Conductor", userC.get().getUsername());
+		model.addAttribute("id", userC.get().getId());
+		model.addAttribute("text", "");
 		
 		return "opinion";
 	}
 	
 	@RequestMapping("/accionOpinar")
-	public String accionOpinar(Model model, @RequestParam String text ,@RequestParam User origin,
-			@RequestParam User destiny) {
+	public String accionOpinar(Model model, @RequestParam String text ,
+			@RequestParam long id) {
+	
 		
 		
+		Optional<User> cond = repo.findById(id);
+		Opinions o = new Opinions(text,usuarioActual,cond.get());
 		model.addAttribute("name", usuarioActual.getUsername());
 		
-		Opinions o = new Opinions(text,origin,destiny);
-		model.addAttribute("Opinions", o);
+	
+	
+		//model.addAttribute("text", o.getText());
+		//model.addAttribute("Conductor", cond.get().getUsername());
 		usuarioActual.addOpinion(o);
 		repoOpinion.save(o);
-		
-		return "opinion";
+		repo.save(usuarioActual);
+		return "main";
 	}
 	
 	@RequestMapping("/accionPublicar")
