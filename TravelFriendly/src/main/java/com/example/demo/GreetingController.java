@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
+import com.example.demo.model.message;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
@@ -113,11 +114,17 @@ public class GreetingController {
 		return "chats";
 	}
 	
-	@GetMapping("/chat/{id}/SaveChats")
-	public String MensajeS(Model model, @RequestParam String mensaje,@PathVariable long id ) {
+	@PostMapping("/chat/{id}/SaveChats")
+	public String MensajeS(Model model, message m,@PathVariable long id ) {
 		model.addAttribute("chats", repoChat.findAll());
       Optional<Chat> chat = repoChat.findById(id);
-      chat.get().addMensaje(mensaje, usuarioActual);
+ //     chat.get().addMensaje(mensaje, usuarioActual);
+      
+     // message m = new message();
+     // m.setmBody(usuarioActual.getUsername(),mensaje);
+      m.setDescripcion(usuarioActual.getUsername());
+      chat.get().getMensg().add(m);
+      
 		repoChat.save(chat.get());
 		return "redirect:/chat/"+id;
 	}

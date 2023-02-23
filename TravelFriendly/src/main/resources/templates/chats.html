@@ -35,15 +35,22 @@
 
 <div class="chat" style="width: 63%; float: right;">
 
-    <form action="/chat/{{chat.id}}/SaveChats">
+    <form method="post" action="/chat/{{chat.id}}/SaveChats">
 		
 		<label for="Mensaje"> Mensaje </label><br>
-		<input type="text" name="mensaje" id="mensaje"><br>
+		<input type="text" name="body" id="mensaje"><br>
 	    <input type="submit" value="Publicar mensaje">
 		
 	</form>
 	
 	   <h2>{{chat.mensajes}}</h2>
+	   
+	   
+	   <ul class="items">
+			{{#chat.mensg}}
+			<li>{{body}} </li>
+			{{/chat.mensg}}
+		</ul>
 
 </div>
 

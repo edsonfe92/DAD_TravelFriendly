@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,9 +18,19 @@ public class Chat {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id; 
 	
-
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<message> mensg;
 	
+	public List<message> getMensg() {
+		return mensg;
+	}
+
+	public void setMensg(List<message> mensg) {
+		this.mensg = mensg;
+	}
+
 	public String mensajes ="";
+	
 	@ManyToOne
 	private User conductor;
 	@ManyToOne
