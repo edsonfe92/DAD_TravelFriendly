@@ -70,3 +70,6 @@ Muestra los viajes que ha publicado el usuario y los que ha comprado
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/opinar.JPG)
 
 Permite publicar una opinión sobre el usuario/conductor (y guardar en la BD) que ha comprado/publicado el viaje.
+
+### Diagrama de pantallas
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagrama.png)
