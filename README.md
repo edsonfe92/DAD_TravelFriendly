@@ -41,18 +41,32 @@ Funcionalidades servicio interno:
 
 ### Capturas de pantalla
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.JPG)
+
 Actualmente en la fase 2, con meter un usuario y una contraseña, genera el usuario para navegar por la app (y lo guarda en la BD).
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/main.JPG)
+
 Es una página de bienvenida, la aplicación saluda usando el nombre del usuario.
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/buscador.JPG)
+
 Permite buscar viajes publicados en la web (por lo que están almacenados en la BD) y comprar un sitio en ese viaje.
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/publicar.JPG)
+
 Permite publicar un viaje (y guardarlo en la BD) rellenando los diferentes campos.
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/chat.JPG)
+
 Permite hablar con el usuario del viaje (si es usuario, habla con el conductor y si es el conductor habla con el usuario). Guarda el chat y sus mensajes en la BD
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/perfil.JPG)
+
 Muestra el nombre de usuario y las opiniones que ha publicado.
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/tusViajes.JPG)
+
 Muestra los viajes que ha publicado el usuario y los que ha comprado
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/opinar.JPG)
+
 Permite publicar una opinión sobre el usuario/conductor (y guardar en la BD) que ha comprado/publicado el viaje.
