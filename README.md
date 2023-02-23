@@ -40,7 +40,7 @@ Funcionalidades servicio interno:
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/uml.jpeg)
 
 ### Capturas de pantalla
-![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.jpg)
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.jpeg)
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/main.jpg)
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/esquemas/buscador.jpg)
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/publicar.jpg)
