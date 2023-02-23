@@ -41,4 +41,37 @@ public class Chat {
 	public void setDescripcion(String origen, String destino, String usuario ) {
 		descripcion = origen+" - " + destino+" - "+usuario;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(String mensajes) {
+		this.mensajes = mensajes;
+	}
+
+	public User getPasajero() {
+		return pasajero;
+	}
+
+	public void setPasajero(User pasajero) {
+		this.pasajero = pasajero;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 }
