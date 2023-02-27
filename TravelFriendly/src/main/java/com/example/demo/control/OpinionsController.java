@@ -9,7 +9,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.OpinionsRepository;
 
 @Controller
-public class OpinionsControl implements CommandLineRunner   {
+public class OpinionsController implements CommandLineRunner   {
 
 	
 	@Autowired

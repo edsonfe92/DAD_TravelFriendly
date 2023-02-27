@@ -19,13 +19,13 @@ public class Chat {
 	private long id; 
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<message> mensg;
+	private List<Message> mensg;
 	
-	public List<message> getMensg() {
+	public List<Message> getMensg() {
 		return mensg;
 	}
 
-	public void setMensg(List<message> mensg) {
+	public void setMensg(List<Message> mensg) {
 		this.mensg = mensg;
 	}
 
