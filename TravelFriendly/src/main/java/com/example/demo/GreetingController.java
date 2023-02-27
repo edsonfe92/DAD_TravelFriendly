@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
-import com.example.demo.model.message;
+import com.example.demo.model.Message;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
@@ -116,7 +116,7 @@ public class GreetingController {
 	}
 	
 	@PostMapping("/chat/{id}/SaveChats")
-	public String MensajeS(Model model, message m,@PathVariable long id ) {
+	public String MensajeS(Model model, Message m,@PathVariable long id ) {
 		model.addAttribute("chats", repoChat.findAll());
       Optional<Chat> chat = repoChat.findById(id);
  //     chat.get().addMensaje(mensaje, usuarioActual);

@@ -8,7 +8,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
 @Controller 
-public class UserContro implements CommandLineRunner  {
+public class UserController implements CommandLineRunner  {
 
 	@Autowired
 	private UserRepository repository;

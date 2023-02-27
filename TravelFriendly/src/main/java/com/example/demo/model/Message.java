@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class message {
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +22,8 @@ public class message {
 		this.id = id;
 	}
 	
-	public message() {}
-	public message(String mBody) {
+	public Message() {}
+	public Message(String mBody) {
 		this.body = mBody;
 	}
 
