@@ -25,6 +25,7 @@ import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
 import com.example.demo.model.Chat;
+import com.example.demo.model.Comprobacion;
 import com.example.demo.model.Opinions;
 import com.example.demo.repository.ChatRepository;
 
@@ -210,85 +211,88 @@ public class GreetingController {
 		return "main";
 	}
 	
-	@RequestMapping("/accionPublicar")
+	@PostMapping("/accionPublicar") //metodo que gestiona cuando se publica un viaje
 	public String publicar(Model model, @RequestParam String origin,
 			@RequestParam String destiny,  @RequestParam String date,
 			@RequestParam int sites, @RequestParam int stops, 
 			@RequestParam String info) {
 		
 		
-		Trip t = new Trip(origin, destiny, date, sites, stops, info);
-		model.addAttribute("PTrip", t);
-		t.SetConductor(usuarioActual);
+		Trip t = new Trip(origin, destiny, date, sites, stops, info); //crear un viaje con la info que ha introducido el usuario
+		//model.addAttribute("PTrip", t);
+		t.SetConductor(usuarioActual); //poner de conductor al usuario que ha publicado el viaje
 		
-		usuarioActual.addTripP(t);
-		repoTrip.save(t);
+		usuarioActual.addTripP(t); //se añade a la lista de viajes publicados en el usuario
+		repoTrip.save(t); //se guarda el viaje en la BD
+		repo.save(usuarioActual); //se actualiza el usuario en la BD
 		
 	
 		return "publish";
 
 	}
 	
-	@RequestMapping("/accionBuscador")
+	@RequestMapping("/accionBuscador") //metodo que gestiona cuando se usa el buscador
 	public String buscar(Model model, @RequestParam String origin,
 						@RequestParam String destiny, @RequestParam String date) {
 		
 		List <Optional<Trip>> tripDate = repoTrip.findByDate(date); //consultamos a la BD por fecha (así evitamos problemas de mayúsculas)
 		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
+		List<Comprobacion> cTrip = new ArrayList<Comprobacion>(); //acordarse de los import
 		
-		for(int i = 0; i < tripDate.size(); i++) {
-			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin))
-					&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny))
-					&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())
-					&&(tripDate.get(i).get().getSites()>0)) {
+		for(int i = 0; i < tripDate.size(); i++) { //recorrer lista por fecha
+			if((tripDate.get(i).get().getOr().equalsIgnoreCase(origin)) //si tiene el mismo origen
+					&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny)) //el mismo destino
+					/*&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())*/ //no esta publicado por el usuario
+					&&(tripDate.get(i).get().getSites()>0)) { //y tiene sitios libres
 				
-				tripOutput.add(tripDate.get(i).get());
+				tripOutput.add(tripDate.get(i).get()); //añadir a la lista de salida ese viaje
+				cTrip.add(new Comprobacion(tripDate.get(i).get()));
 			}
 		}
 		
-
-		if(tripOutput.size()>0) {
-			model.addAttribute("searched", true);
-			model.addAttribute("resultados", tripOutput);
+		for (int i = 0; i < cTrip.size(); i++) {
+			if(cTrip.get(i).getTrip().getConductorId()==usuarioActual.getId()) {
+				cTrip.get(i).setComp(true);
+			}
 		}
-		else {
+
+		if(tripOutput.size()>0) { //si la lista de salida tiene algun viaje
+			model.addAttribute("searched", true);
+			model.addAttribute("resultados", cTrip); //se muestran los viajes
+			//model.addAttribute("comprobacion", cTrip);//Hay q pasarle la lista de comprobaciones para que no haga bucle doble y movidas
+		}
+		else {//si no
 			model.addAttribute("searched", false);
-			model.addAttribute("error", "No se han encontrado resultados");
+			model.addAttribute("error", "No se han encontrado resultados"); //se devuelve mensaje de error
 		}
 		
 		
 		return "search"; 
 	}
 	
-	@RequestMapping("/accionReserva")
-	public String comprar(Model model, @RequestParam long id) {
+	@PostMapping("/accionReserva") //metodo que se gestiona al reservar un viaje
+	public String comprar(Model model, @RequestParam long id) { //le llega el id del viaje de un formulario invisible en html
 		
-		Optional<Trip> t = repoTrip.findById(id);
-		t.get().buyTrip();
-		repoTrip.save(t.get());
-		
-		Booking b = new Booking(usuarioActual, t.get());
-		
-		model.addAttribute("BTrip", t.get().GetConductor());
-		
-		
-		usuarioActual.addTripB(b);
-	
-		repoBook.save(b);
-		
+		Optional<Trip> t = repoTrip.findById(id); //recupera el viaje reservado
 
-		
-		Chat c = new Chat(t.get().GetConductor(), usuarioActual);
-		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername());
-		repoChat.save(c);
+		t.get().buyTrip(); //resta un hueco libre al viaje
+		t.get().SetUsersinTrip(usuarioActual); //en la lista de usuarios del viaje mete al usuario
+		repoTrip.save(t.get()); //volvemos a guardar el viaje en la BD
 
+		Booking b = new Booking(usuarioActual, t.get()); //creamos una reserva a nombre del usuario y se le mete el viaje
+		usuarioActual.addTripB(b); //se añade la reserva al usuario
+		repo.save(usuarioActual); //actualizamos el usuario en la BD
 		
+		repoBook.save(b); //guardar reserva en la BD
+		
+		Chat c = new Chat(t.get().GetConductor(), usuarioActual); //creamos el chat con el conductor y el usuario
+		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername()); //le añadimos la descripción
+		repoChat.save(c); //se guarda el chat en la BD
 
-		
-		
+
 		
 		model.addAttribute("searched", false);
-		model.addAttribute("error", "");
+		model.addAttribute("error", "Reservado con éxito"); //En el hueco de error muestra que la reserva fue bien
 		return "search";
 	}
 }

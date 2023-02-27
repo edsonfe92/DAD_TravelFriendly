@@ -34,15 +34,7 @@
 </div>
 
 <div class="chat" style="width: 63%; float: right;">
-
-    <form method="post" action="/chat/{{chat.id}}/SaveChats">
-		
-		<label for="Mensaje"> Mensaje </label><br>
-		<input type="text" name="body" id="mensaje"><br>
-	    <input type="submit" value="Publicar mensaje">
-		
-	</form>
-	
+	<div style="height: 70vh; max-height: 70vh; overflow:auto; overflow-y: scroll; background-color: white;">
 	   <h2>{{chat.mensajes}}</h2>
 	   
 	   
@@ -51,6 +43,16 @@
 			<li>{{body}} </li>
 			{{/chat.mensg}}
 		</ul>
+	</div>
+	<div class="teclado">
+		<form method="post" action="/chat/{{chat.id}}/SaveChats">
+		
+		<label for="Mensaje"> Mensaje </label><br>
+		<input type="text" name="body" id="mensaje"><br>
+	    <input type="submit" value="Publicar mensaje">
+		
+		</form>
+	</div>
 
 </div>
 

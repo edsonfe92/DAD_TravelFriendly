@@ -24,15 +24,15 @@
 <div class="formulario">
     <form method="post" action="/accionPublicar">
         <label for="origin">Origen</label><br>
-        <input type="t xt" name="origin" id="origin"><br>
+        <input type="text" name="origin" id="origin" required><br>
         <label for="destiny">Destino</label><br>
-        <input type="text" name="destiny" id="destiny"><br>
+        <input type="text" name="destiny" id="destiny" required><br>
         <label for="date">Fecha de salida</label><br>
-        <input type="date" name="date" id="date"><br>
+        <input type="date" name="date" id="date" required><br>
         <label for="sites">Plazas disponibles</label><br>
-        <input type="number" name="sites" id="sites" min="0"><br>
+        <input type="number" name="sites" id="sites" min="0" required><br>
         <label for="stops">Número Paradas</label><br>
-        <input type="number" name="stops" id="stops" min="0"><br>
+        <input type="number" name="stops" id="stops" min="0" required><br>
         <label for="info">Información relevante</label><br>
         <input type="text" name="info" id="info"><br>
         <input type="submit" value="Publicar Viaje">

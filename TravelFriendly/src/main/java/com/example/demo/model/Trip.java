@@ -25,7 +25,7 @@ public class Trip {
 	private int stops; //número de paradas
 	private String info; //info relevante
 	
-	@ManyToOne
+	@ManyToOne //En user se enlaza con PTrip
 	private User conductor;
 	
 	private String nombreconductor=""; // Para el chat 

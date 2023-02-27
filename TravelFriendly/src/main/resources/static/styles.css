@@ -94,3 +94,8 @@ nav{
     height: 80vh;
     float: right;
   }
+  
+  .teclado{
+	  position: sticky;
+	  top: 90vh;
+  }

@@ -13,7 +13,7 @@ public class Booking {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id; 
 	
-	@ManyToOne
+	@ManyToOne //Esta se enlaza con Btrip
 	private User user;
 	
 	@ManyToOne

@@ -24,11 +24,11 @@
 <div class="formulario">
     <form action="/accionBuscador">
 		<label for="origin">Origen: </label>
-		<input type="text" name="origin" id="origin">
+		<input type="text" name="origin" id="origin" required>
 		<label for="destiny">Destino: </label>
-		<input type="text" name="destiny" id="destiny">
+		<input type="text" name="destiny" id="destiny" required>
 		<label for="origin">Fecha: </label>
-        <input type="date" name="date" id="date">
+        <input type="date" name="date" id="date" required>
         <input type="submit" value="Buscar"><br>
     </form>
 </div>
@@ -38,13 +38,18 @@
     <ul>
 		{{#resultados}}
 			<li style="border-style: solid; border-width: 2px;">
-				<div class="titulo">Origen: </div>{{origin}} 
-				<div class="titulo">Destino: </div>{{destiny}} 
-				<div class="titulo">Fecha: </div>{{date}}
+				<div class="titulo">Origen: </div>{{trip.origin}} 
+				<div class="titulo">Destino: </div>{{trip.destiny}} 
+				<div class="titulo">Fecha: </div>{{trip.date}}
+				{{#comp}}
+					<br>No está permitido reservar un sitio en un viaje propio
+				{{/comp}}
+				{{^comp}}
 				<form method="post" action="/accionReserva">
-					<input style="display: none;" type="text" name="id" id="id" value={{id}}>
+					<input style="display: none;" type="text" name="id" id="id" value={{trip.id}}>
 					<input type="submit" value="Reservar Sitio">
 				</form>
+				{{/comp}}
 			</li>
 		{{/resultados}}	
 	</ul>

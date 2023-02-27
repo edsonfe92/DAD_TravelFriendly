@@ -20,9 +20,9 @@ public class User {
 	
 	// private List<Integer> valoraciones;
 
-	@ManyToMany(mappedBy="use")
+	@OneToMany (mappedBy="conductor")//He tocado esta
  	private List<Trip> Ptrip= new ArrayList<Trip>();
-	@ManyToMany
+	@OneToMany(mappedBy="user")//He tocado esta
 	private List<Booking> Btrip= new ArrayList<Booking>();
 	
 	@OneToMany
