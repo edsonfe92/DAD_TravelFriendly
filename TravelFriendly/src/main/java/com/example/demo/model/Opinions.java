@@ -18,13 +18,15 @@ public class Opinions {
 	private String text="";
 	@OneToOne
 	private User orig, dest;
-	
+	private String nameOrig, nameDest;
 	protected Opinions(){}
 	
-	public Opinions(String text, User orig, User dest) {
+	public Opinions(String text, User orig, User dest, String nameOrig, String nameDest) {
 		this.text=text;
 		this.orig=orig;
 		this.dest=dest;
+		this.nameOrig=nameOrig;
+		this.nameDest=nameDest;
 	}
 	
 	public long getId() {
@@ -34,6 +36,7 @@ public class Opinions {
 	public String getText() {
 		return text;
 	}
+	
 	public User getOrigin() {
 		return this.orig;
 	}
@@ -44,8 +47,6 @@ public class Opinions {
 	public void setOpinion(String text) {
 		this.text=text;
 	}
-	
-	
-	
-	
 }
+	
+	

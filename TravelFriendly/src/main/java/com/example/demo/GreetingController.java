@@ -140,18 +140,36 @@ public class GreetingController {
 		//model.addAttribute("name", u.get().getUsername());
 		//System.out.println("profile");
 		
-		List<User> u = new ArrayList<User>();
+		//List<User> u = new ArrayList<User>();
+		
+		
+
 		List<Opinions> o = new ArrayList<Opinions>();
+	//	Optional<Opinions> op = repoOpinion.findById(id);
+		//repoOpinion.save(op.get());
+		
 		for(int i=0;i<usuarioActual.getOpinions().size();i++) {
-			u.add(usuarioActual.getOpinions().get(i).getDestiny());
+			
 			o.add(usuarioActual.getOpinions().get(i));
+			
+			repo.save(usuarioActual.getOpinions().get(i).getDestiny());
+			
 		}
 		
-		model.addAttribute("name", usuarioActual.getUsername());
-		model.addAttribute("Opinions", u);
 		model.addAttribute("opin", o);
+		//model.addAttribute("opin", op.get().getText());
+		//model.addAttribute("nom", op.get().getDestiny().getUsername());
+	//	model.addAttribute("nombrec", o3.get().getDestiny().getUsername());
 		
-		return "profile";
+		model.addAttribute("name", usuarioActual.getUsername());
+		//model.addAttribute("Opinions", u);
+	//	idantiguo=id;
+		//model.addAttribute("o", o2.get().getDestiny());
+
+		
+		
+	return"profile";
+	
 	}
 	
 	@GetMapping("/tusViajes")
@@ -160,54 +178,93 @@ public class GreetingController {
 		
 		
 		List<Trip> t = new ArrayList<Trip>();
-		List<String> c = new ArrayList<String>();
+		
 		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
 			t.add(usuarioActual.getBtrip().get(i).getTrip());
 		}
 		
-		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
-			c.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getUsername());
-		}
 		model.addAttribute("name", usuarioActual.getUsername());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
 		model.addAttribute("BTrip", t);
-		model.addAttribute("Conductor", c);
+		
+			
+		
+		
+		
+		
 	
 		return "yourTravel";
 	}
 	
-	@GetMapping("/opinar")
-	public String opinar(Model model) {
+	@GetMapping("/opinar/{id}")
+	public String opinar(Model model, @PathVariable long id) {
 		
+		//model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		
-		Optional <Booking> b = repoBook.findByUser_Id(usuarioActual.getId());
-		Optional<Trip> trip= repoTrip.findById(b.get().getTrip().getId());
-		Optional<User> userC= repo.findById(trip.get().getConductorId());
+	
+		List<User> l = new ArrayList<User>();
+	
+		
+	List<Trip> t = new ArrayList<Trip>();
+
+		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
+			t.add(usuarioActual.getBtrip().get(i).getTrip());
+			repoTrip.save(usuarioActual.getBtrip().get(i).getTrip());
+		}
+		
+		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
+			l.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor());
+			repo.save(usuarioActual.getBtrip().get(i).getTrip().GetConductor());
+		}
+		
+		/*for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
+			id.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId());
+			
+			if(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId()!=0) {
+				repoTrip.deleteById(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId());
+			}
+		}*/
+		Optional<Trip> t2 = repoTrip.findById(id);
+		Optional<User> l2= repo.findById(t2.get().GetConductor().getId());
+		
 		model.addAttribute("name", usuarioActual.getUsername());
-		model.addAttribute("Conductor", userC.get().getUsername());
-		model.addAttribute("id", userC.get().getId());
+		//model.addAttribute("opin", t);
+		model.addAttribute("opin",t2.get().GetConductor().getUsername());
+		model.addAttribute("IdConductor", l);
 		model.addAttribute("text", "");
+		//idantiguo=id;
 		
 		return "opinion";
 	}
 	
-	@RequestMapping("/accionOpinar")
+	@RequestMapping("/accionOpinar/{id}")
 	public String accionOpinar(Model model, @RequestParam String text ,
-			@RequestParam long id) {
+			@PathVariable long id) {
+	
+	    
+		
+		Optional<Trip> t = repoTrip.findById(id);
+		
+		Opinions o2 = new Opinions(text,usuarioActual,t.get().GetConductor(), usuarioActual.getUsername(), t.get().GetConductor().getUsername());
+		usuarioActual.addOpinion(o2);
+		repoOpinion.save(o2);
+		//Optional <Trip> t= repoTrip.findByConductor_Id(cond.get().getId());
+		//for(int i=0;i<cond.get().getBtrip().size();i++) {
+			//repoTrip.save(cond.get().getBtrip().get(i).getTrip());
+		//}
+		
+		//t.get().SetConductor(t.get().GetConductor());
 	
 		
+		//repoTrip.deleteById(t.get().getId());
 		
-		Optional<User> cond = repo.findById(id);
-		Opinions o = new Opinions(text,usuarioActual,cond.get());
 		model.addAttribute("name", usuarioActual.getUsername());
-		
-	
-	
+		//idantiguo=id;
+		//repoTrip.deleteById((long) (cond.get().getBtrip().size()-1));
 		//model.addAttribute("text", o.getText());
 		//model.addAttribute("Conductor", cond.get().getUsername());
-		usuarioActual.addOpinion(o);
-		repoOpinion.save(o);
-		repo.save(usuarioActual);
+		
+		
 		return "main";
 	}
 	

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Friendly</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="fila">
-        <button class="boton">Realiza tu opinión sobre: {{Conductor}}</button> 
+        <button class="boton">Realiza tu opinión sobre: <li> <a>   {{opin}}   </a></li>  </button> 
     </div>
     
     <h4 TUS VIAJES class= "titulo" >
@@ -40,11 +40,13 @@
 				
 
 
-    <form method="post" action="/accionOpinar">
+    <form method="post" action="/accionOpinar/{{id}}">
 		
 		<label for="Mensaje"> Enviar Opinion </label><br>
 		<input type="text" name="text"><br>
+		{{#IdConductor}}
 		<input style="display: none;" type="text" name="id" id="id" value={{id}}>
+		{{/IdConductor}}
 	    <input type="submit" value="Publicar opinion">
 		
 	</form>

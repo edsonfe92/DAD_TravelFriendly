@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Friendly</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
 </head>
 
 <body>
@@ -30,13 +30,15 @@
     <div class="fila">
         <button class="boton">Tus opiniones</button>
         <div class="chat" style="width: 100%; float: none;">
-				{{#Opinions}}
-				{{#opin}}
-					<li>Tu opinion sobre {{username}} es: {{text}}  </li>
+			
+			{{#opin}}
+					<li>Tu opinion sobre  {{nameDest}} es: {{text}}  </li>
+			{{/opin}}
 					<br>
-					
-					{{/opin}}
-				{{/Opinions}}	
+		
+				
+				
+				
 				
 				
 			</li>
