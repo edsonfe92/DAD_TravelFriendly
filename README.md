@@ -37,7 +37,7 @@ Funcionalidades servicio interno:
 ![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/ER.jfif)
 
 ### Diagrama_UML
-![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/uml.jfif)
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/umlBueno.jfif)
 
 ### Capturas de pantalla
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.JPG)
