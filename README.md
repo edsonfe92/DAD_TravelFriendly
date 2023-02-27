@@ -34,10 +34,10 @@ Funcionalidades servicio interno:
 
 ## Fase_2
 ### Diagrama_E-R
-![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/e-r.jpg)
+![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/ER.jfif)
 
 ### Diagrama_UML
-![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/uml.jpeg)
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/uml.jfif)
 
 ### Capturas de pantalla
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.JPG)
