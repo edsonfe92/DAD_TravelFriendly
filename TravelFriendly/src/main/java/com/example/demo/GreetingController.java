@@ -118,13 +118,10 @@ public class GreetingController {
 	@PostMapping("/chat/{id}/SaveChats")
 	public String MensajeS(Model model, Message m,@PathVariable long id ) {
 		model.addAttribute("chats", repoChat.findAll());
-      Optional<Chat> chat = repoChat.findById(id);
- //     chat.get().addMensaje(mensaje, usuarioActual);
+		Optional<Chat> chat = repoChat.findById(id);
       
-     // message m = new message();
-     // m.setmBody(usuarioActual.getUsername(),mensaje);
-      m.setDescripcion(usuarioActual.getUsername());
-      chat.get().getMensg().add(m);
+		m.setDescripcion(usuarioActual.getUsername());
+		chat.get().getMensg().add(m);
       
 		repoChat.save(chat.get());
 		return "redirect:/chat/"+id;
@@ -135,48 +132,23 @@ public class GreetingController {
 	
 	@GetMapping("/perfil")
 	public String Perfil(Model model) {
-		//User u = repo.findByUsername("Pepe");
-		//Optional<User> u = repo.findByUsername("Juan");
-		//model.addAttribute("name", u.get().getUsername());
-		//System.out.println("profile");
-		
-		//List<User> u = new ArrayList<User>();
-		
-		
-
+	
 		List<Opinions> o = new ArrayList<Opinions>();
-	//	Optional<Opinions> op = repoOpinion.findById(id);
-		//repoOpinion.save(op.get());
-		
 		for(int i=0;i<usuarioActual.getOpinions().size();i++) {
-			
 			o.add(usuarioActual.getOpinions().get(i));
-			
-			repo.save(usuarioActual.getOpinions().get(i).getDestiny());
-			
+			repo.save(usuarioActual.getOpinions().get(i).getDestiny());	
 		}
 		
-		model.addAttribute("opin", o);
-		//model.addAttribute("opin", op.get().getText());
-		//model.addAttribute("nom", op.get().getDestiny().getUsername());
-	//	model.addAttribute("nombrec", o3.get().getDestiny().getUsername());
-		
+		model.addAttribute("opin", o);		
 		model.addAttribute("name", usuarioActual.getUsername());
-		//model.addAttribute("Opinions", u);
-	//	idantiguo=id;
-		//model.addAttribute("o", o2.get().getDestiny());
-
-		
-		
-	return"profile";
+	
+		return"profile";
 	
 	}
 	
 	@GetMapping("/tusViajes")
 	public String tusViajes(Model model) {
-		
-		
-		
+
 		List<Trip> t = new ArrayList<Trip>();
 		
 		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
@@ -186,26 +158,17 @@ public class GreetingController {
 		model.addAttribute("name", usuarioActual.getUsername());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
 		model.addAttribute("BTrip", t);
-		
-			
-		
-		
-		
-		
-	
+
 		return "yourTravel";
 	}
 	
 	@GetMapping("/opinar/{id}")
 	public String opinar(Model model, @PathVariable long id) {
-		
-		//model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
-		
-	
+			
 		List<User> l = new ArrayList<User>();
 	
 		
-	List<Trip> t = new ArrayList<Trip>();
+		List<Trip> t = new ArrayList<Trip>();
 
 		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
 			t.add(usuarioActual.getBtrip().get(i).getTrip());
@@ -217,22 +180,13 @@ public class GreetingController {
 			repo.save(usuarioActual.getBtrip().get(i).getTrip().GetConductor());
 		}
 		
-		/*for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
-			id.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId());
-			
-			if(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId()!=0) {
-				repoTrip.deleteById(usuarioActual.getBtrip().get(i).getTrip().GetConductor().getId());
-			}
-		}*/
 		Optional<Trip> t2 = repoTrip.findById(id);
 		Optional<User> l2= repo.findById(t2.get().GetConductor().getId());
 		
 		model.addAttribute("name", usuarioActual.getUsername());
-		//model.addAttribute("opin", t);
 		model.addAttribute("opin",t2.get().GetConductor().getUsername());
 		model.addAttribute("IdConductor", l);
 		model.addAttribute("text", "");
-		//idantiguo=id;
 		
 		return "opinion";
 	}
@@ -240,31 +194,15 @@ public class GreetingController {
 	@RequestMapping("/accionOpinar/{id}")
 	public String accionOpinar(Model model, @RequestParam String text ,
 			@PathVariable long id) {
-	
-	    
 		
 		Optional<Trip> t = repoTrip.findById(id);
 		
 		Opinions o2 = new Opinions(text,usuarioActual,t.get().GetConductor(), usuarioActual.getUsername(), t.get().GetConductor().getUsername());
 		usuarioActual.addOpinion(o2);
 		repoOpinion.save(o2);
-		//Optional <Trip> t= repoTrip.findByConductor_Id(cond.get().getId());
-		//for(int i=0;i<cond.get().getBtrip().size();i++) {
-			//repoTrip.save(cond.get().getBtrip().get(i).getTrip());
-		//}
-		
-		//t.get().SetConductor(t.get().GetConductor());
-	
-		
-		//repoTrip.deleteById(t.get().getId());
 		
 		model.addAttribute("name", usuarioActual.getUsername());
-		//idantiguo=id;
-		//repoTrip.deleteById((long) (cond.get().getBtrip().size()-1));
-		//model.addAttribute("text", o.getText());
-		//model.addAttribute("Conductor", cond.get().getUsername());
-		
-		
+			
 		return "main";
 	}
 	
@@ -276,14 +214,12 @@ public class GreetingController {
 		
 		
 		Trip t = new Trip(origin, destiny, date, sites, stops, info); //crear un viaje con la info que ha introducido el usuario
-		//model.addAttribute("PTrip", t);
 		t.SetConductor(usuarioActual); //poner de conductor al usuario que ha publicado el viaje
 		
 		usuarioActual.addTripP(t); //se añade a la lista de viajes publicados en el usuario
 		repoTrip.save(t); //se guarda el viaje en la BD
 		repo.save(usuarioActual); //se actualiza el usuario en la BD
 		
-	
 		return "publish";
 
 	}
