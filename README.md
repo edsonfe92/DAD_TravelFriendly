@@ -26,6 +26,11 @@ Entidades:
 4. Reserva: una vez reservado el viaje, el usuario tiene su reserva.
 5. Valoración: es la opinión que se hace de cualquier usuario de la aplicación. Los conductores hacen valoraciones de sus clientes y los clientes de los conductores.
 
+Actualización Fase 2: como no se ha podido hacer la diferenciacion entre las entidades usuario y conductor, ya que en esta fase no se podía implementar el inicio de sesión, se han incluido las entidades de chat y mensaje.
+
+5. Chat: es una entidad que recoge dos usuarios (participantes del viaje, conductor y usuario) y la lista de mensajes entre ellos.
+6. Mensajes: contienen un string con el cuerpo del mensaje.
+
 Funcionalidades servicio interno:
 1. Envío de correo de electrónico al registrarse un usuario.
 2. Envío de correo electrónico cuando el usuario indica que ha olvidado su contraseña.
@@ -63,6 +68,7 @@ Permite hablar con el usuario del viaje (si es usuario, habla con el conductor y
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/perfil.JPG)
 
 Muestra el nombre de usuario y las opiniones que ha publicado.
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/tusViajes.JPG)
 
 Muestra los viajes que ha publicado el usuario y los que ha comprado
