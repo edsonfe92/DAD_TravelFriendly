@@ -1,15 +1,18 @@
 package com.example.demo;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +31,6 @@ import com.example.demo.model.Chat;
 import com.example.demo.model.Comprobacion;
 import com.example.demo.model.Opinions;
 import com.example.demo.repository.ChatRepository;
-
-
-
 
 
 @Controller
@@ -56,29 +56,36 @@ public class GreetingController {
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
 	private User usuarioActual = new User();
 	
-	@GetMapping ("/greeting")
-	public String greeting(Model model) {
-		model.addAttribute("name", "World");
-		return "greeting_template";
+	
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+
+		Principal principal = request.getUserPrincipal();
+
+		if (principal != null) {
+
+			model.addAttribute("logged", true);
+			model.addAttribute("userName", principal.getName()); //En cualquier vista se puede acceder a este valor
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
+		} else {
+			model.addAttribute("logged", false);
+		}
 	}
-	
-	
-	@RequestMapping("/Sesion")
-	public String sesion(Model model, @RequestParam String user , @RequestParam String password ) {
-		
-		usuarioActual.setUsername(user);
-		usuarioActual.setPassword(password);
-		
-		repo.save(usuarioActual);
-		
-		model.addAttribute("name", user);
-		return "main";
-	}
-	
-	@GetMapping("/")
+	@RequestMapping("/")
 	public String Base(Model model) {
 		return "index";
 	}
+	
+	@GetMapping("/Sesion")
+	public String sesion(Model model ) {
+		
+		repo.save(usuarioActual);
+		
+		return "main";
+	}
+	
+	
 	
 	@GetMapping("/bienvenida")
 	public String bienvenida(Model model) {
