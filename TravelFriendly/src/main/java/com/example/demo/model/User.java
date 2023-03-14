@@ -17,6 +17,7 @@ public class User {
 	private Long id; 
 	private String username;
 	private String password;
+	private String mail;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -41,9 +42,10 @@ public class User {
 	//protected User() {} //Necesario para la BBDD
 	
 	public User() {}
-	public User(String username, String password,String... roles) {
+	public User(String username, String password, String mail, String... roles) {
 		this.username = username;
 		this.password = password;
+		this.mail = mail;
 		this.roles = List.of(roles);
 	}
 	public void setId(Long id) {

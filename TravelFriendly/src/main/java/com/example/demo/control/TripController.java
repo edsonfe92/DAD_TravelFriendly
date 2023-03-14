@@ -23,9 +23,9 @@ import com.example.demo.repository.UserRepository;
 		@Override
 		public void run(String... args) throws Exception {
 		
-		User u = new User("Matías", "Sarajevo");
-		User u2 = new User("Marcos", "Zagreb");
-		User u3 = new User("Marcos", "Transilvania");
+		User u = new User("Matías", "Sarajevo", "sarajevo@gmail.com");
+		User u2 = new User("Marcos", "Zagreb", "zagreb@gmail.com");
+		User u3 = new User("Marcos", "Transilvania", "transilvania@gmail.com");
 		userRepo.save(u);
 		userRepo.save(u2);
 		userRepo.save(u3);

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,9 @@ public class GreetingController {
 	@Autowired
 	private ChatRepository repoChat;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	//Usuario que se encuentre iniciando la aplicacion
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
 	private User usuarioActual = new User();
@@ -81,7 +85,6 @@ public class GreetingController {
 	@GetMapping("/Sesion")
 	public String sesion(Model model) {
 		
-		repo.save(usuarioActual);
 		
 		return "main";
 	}
@@ -295,5 +298,17 @@ public class GreetingController {
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "Reservado con éxito"); //En el hueco de error muestra que la reserva fue bien
 		return "search";
+	}
+	
+	@GetMapping("/inscribirse")
+	public String crearCuenta(Model model) {
+		
+		return "signUp";
+	}
+	
+	@PostMapping("/signedUp")
+	public String registrarse(Model model, @RequestParam String username, @RequestParam String password, @RequestParam String mail) {
+		repo.save(new User(username, passwordEncoder.encode(password), mail,"USER"));
+		return "login";
 	}
 }

@@ -30,6 +30,7 @@
 		<label for="origin">Fecha: </label>
         <input type="date" name="date" id="date" required>
         <input type="submit" value="Buscar"><br>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
     </form>
 </div>
 
@@ -48,6 +49,7 @@
 				<form method="post" action="/accionReserva">
 					<input style="display: none;" type="text" name="id" id="id" value={{trip.id}}>
 					<input type="submit" value="Reservar Sitio">
+					<input type="hidden" name="_csrf" value="{{token}}"/>
 				</form>
 				{{/comp}}
 			</li>

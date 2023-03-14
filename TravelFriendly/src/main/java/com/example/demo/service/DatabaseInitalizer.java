@@ -27,8 +27,8 @@ public class DatabaseInitalizer {
 	@PostConstruct
 	public void init() throws IOException, URISyntaxException {
 		
-		rUser.save(new User("user", passwordEncoder.encode("pass"), "USER"));
-		rUser.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
+		rUser.save(new User("user", passwordEncoder.encode("pass"), "user@gmail.com","USER"));
+		rUser.save(new User("admin", passwordEncoder.encode("adminpass"), "admin@gmail.com", "USER", "ADMIN"));
 	
 		
 	}
