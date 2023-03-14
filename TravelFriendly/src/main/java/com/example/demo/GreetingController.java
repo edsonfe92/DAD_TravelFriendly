@@ -70,6 +70,7 @@ public class GreetingController {
 
 		} else {
 			model.addAttribute("logged", false);
+			model.addAttribute("userName","Invitado");
 		}
 	}
 	@RequestMapping("/")
@@ -78,7 +79,7 @@ public class GreetingController {
 	}
 	
 	@GetMapping("/Sesion")
-	public String sesion(Model model ) {
+	public String sesion(Model model) {
 		
 		repo.save(usuarioActual);
 		

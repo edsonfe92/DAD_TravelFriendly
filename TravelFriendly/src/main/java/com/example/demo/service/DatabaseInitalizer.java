@@ -29,7 +29,7 @@ public class DatabaseInitalizer {
 		
 		rUser.save(new User("user", passwordEncoder.encode("pass"), "USER"));
 		rUser.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-		
+	
 		
 	}
 	
