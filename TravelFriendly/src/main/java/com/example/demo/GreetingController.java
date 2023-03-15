@@ -224,15 +224,17 @@ public class GreetingController {
 	public String publicar(Model model, @RequestParam String origin,
 			@RequestParam String destiny,  @RequestParam String date,
 			@RequestParam int sites, @RequestParam int stops, 
-			@RequestParam String info) {
+			@RequestParam String info, HttpServletRequest request) {
 		
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
 		
 		Trip t = new Trip(origin, destiny, date, sites, stops, info); //crear un viaje con la info que ha introducido el usuario
-		t.SetConductor(usuarioActual); //poner de conductor al usuario que ha publicado el viaje
+		t.SetConductor(user.get()); //poner de conductor al usuario que ha publicado el viaje
 		
-		usuarioActual.addTripP(t); //se añade a la lista de viajes publicados en el usuario
+		user.get().addTripP(t); //se añade a la lista de viajes publicados en el usuario
 		repoTrip.save(t); //se guarda el viaje en la BD
-		repo.save(usuarioActual); //se actualiza el usuario en la BD
+		repo.save(user.get()); //se actualiza el usuario en la BD
 		
 		return "publish";
 
@@ -258,10 +260,10 @@ public class GreetingController {
 		}
 		
 		String username = request.getUserPrincipal().getName();
-		Optional <User> u = repo.findByUsername(username);
+		Optional <User> user = repo.findByUsername(username);
 		
 		for (int i = 0; i < cTrip.size(); i++) {
-			if(cTrip.get(i).getTrip().getConductorId()==u.get().getId()) {
+			if(cTrip.get(i).getTrip().getConductorId()==user.get().getId()) {
 				cTrip.get(i).setComp(true);
 			}
 		}
@@ -281,21 +283,24 @@ public class GreetingController {
 	}
 	
 	@PostMapping("/accionReserva") //metodo que se gestiona al reservar un viaje
-	public String comprar(Model model, @RequestParam long id) { //le llega el id del viaje de un formulario invisible en html
+	public String comprar(Model model, @RequestParam long id, HttpServletRequest request) { //le llega el id del viaje de un formulario invisible en html
 		
 		Optional<Trip> t = repoTrip.findById(id); //recupera el viaje reservado
 
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
+		
 		t.get().buyTrip(); //resta un hueco libre al viaje
-		t.get().SetUsersinTrip(usuarioActual); //en la lista de usuarios del viaje mete al usuario
+		t.get().SetUsersinTrip(user.get()); //en la lista de usuarios del viaje mete al usuario
 		repoTrip.save(t.get()); //volvemos a guardar el viaje en la BD
 
-		Booking b = new Booking(usuarioActual, t.get()); //creamos una reserva a nombre del usuario y se le mete el viaje
+		Booking b = new Booking(user.get(), t.get()); //creamos una reserva a nombre del usuario y se le mete el viaje
 		usuarioActual.addTripB(b); //se añade la reserva al usuario
-		repo.save(usuarioActual); //actualizamos el usuario en la BD
+		repo.save(user.get()); //actualizamos el usuario en la BD
 		
 		repoBook.save(b); //guardar reserva en la BD
 		
-		Chat c = new Chat(t.get().GetConductor(), usuarioActual); //creamos el chat con el conductor y el usuario
+		Chat c = new Chat(t.get().GetConductor(), user.get()); //creamos el chat con el conductor y el usuario
 		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername()); //le añadimos la descripción
 		repoChat.save(c); //se guarda el chat en la BD
 
