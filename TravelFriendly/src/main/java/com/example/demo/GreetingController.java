@@ -237,7 +237,7 @@ public class GreetingController {
 	
 	@RequestMapping("/accionBuscador") //metodo que gestiona cuando se usa el buscador
 	public String buscar(Model model, @RequestParam String origin,
-						@RequestParam String destiny, @RequestParam String date) {
+						@RequestParam String destiny, @RequestParam String date, HttpServletRequest request) {
 		
 		List <Optional<Trip>> tripDate = repoTrip.findByDate(date); //consultamos a la BD por fecha (así evitamos problemas de mayúsculas)
 		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
@@ -254,8 +254,11 @@ public class GreetingController {
 			}
 		}
 		
+		String username = request.getUserPrincipal().getName();
+		Optional <User> u = repo.findByUsername(username);
+		
 		for (int i = 0; i < cTrip.size(); i++) {
-			if(cTrip.get(i).getTrip().getConductorId()==usuarioActual.getId()) {
+			if(cTrip.get(i).getTrip().getConductorId()==u.get().getId()) {
 				cTrip.get(i).setComp(true);
 			}
 		}
