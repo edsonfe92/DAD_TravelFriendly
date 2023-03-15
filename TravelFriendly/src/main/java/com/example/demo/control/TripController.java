@@ -10,9 +10,9 @@ import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
 	@Controller 
-	public class TripController implements CommandLineRunner  {
+	public class TripController /*implements CommandLineRunner */ {
 
-		@Autowired
+		/*@Autowired
 		private UserRepository userRepo;
 		
 		
@@ -42,7 +42,7 @@ import com.example.demo.repository.UserRepository;
 		repository.save(t3);
 
 
-		}
+		}*/
 
 
 	
