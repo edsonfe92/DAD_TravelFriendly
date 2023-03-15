@@ -42,15 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         //Un invitado unicamente podra buscar viajes,  pero no reservar. Las demas funcionalidades precisan de inicio de sesion 
         http.authorizeRequests().antMatchers("/Sesion").permitAll();
         http.authorizeRequests().antMatchers("/buscar").permitAll();
-        
-        
         http.authorizeRequests().antMatchers("/chat").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/chat/*").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/publicar").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/perfil").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/tusViajes").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/opinar/*").hasAnyRole("USER");
-        
+        http.authorizeRequests().antMatchers("/accionOpinar/*").hasAnyRole("USER");
         // form login 
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");

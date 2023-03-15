@@ -27,6 +27,7 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		
 
 		List<GrantedAuthority> roles = new ArrayList<>();
 		for (String role : user.getRoles()) {

@@ -144,15 +144,18 @@ public class GreetingController {
 	@GetMapping("/perfil")
 	public String Perfil(Model model, HttpServletRequest request) {
 	
-		Principal principal = request.getUserPrincipal();
+		//recogemos el nombre del usuario real a través del srrvicio http
+		//buscamos su nombre en el repositorio
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
 		List<Opinions> o = new ArrayList<Opinions>();
-		for(int i=0;i<usuarioActual.getOpinions().size();i++) {
-			o.add(usuarioActual.getOpinions().get(i));
-			repo.save(usuarioActual.getOpinions().get(i).getDestiny());	
+		for(int i=0;i<user.get().getOpinions().size();i++) {
+			o.add(user.get().getOpinions().get(i));
+			repo.save(user.get().getOpinions().get(i).getDestiny());	
 		}
 		
 		model.addAttribute("opin", o);		
-		model.addAttribute("name", principal.getName());
+		model.addAttribute("name", user.get().getUsername());
 	
 		return"profile";
 	
@@ -161,43 +164,49 @@ public class GreetingController {
 	@GetMapping("/tusViajes")
 	public String tusViajes(Model model, HttpServletRequest request) {
 
-		Principal principal = request.getUserPrincipal();
-			
+		//recogemos el nombre del usuario real a través del srrvicio http
+		//buscamos su nombre en el repositorio
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
 		List<Trip> t = new ArrayList<Trip>();
 		
-		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
-			t.add(usuarioActual.getBtrip().get(i).getTrip());
+		for(int i = 0; i<user.get().getBtrip().size(); i++) {
+			t.add(user.get().getBtrip().get(i).getTrip());
 		}
 		
-		model.addAttribute("name", principal.getName());
-		model.addAttribute("PTrip", usuarioActual.getPtrip());
+		model.addAttribute("name",user.get().getUsername());
+		model.addAttribute("PTrip", user.get().getPtrip());
 		model.addAttribute("BTrip", t);
-
 		return "yourTravel";
 	}
 	
 	@GetMapping("/opinar/{id}")
-	public String opinar(Model model, @PathVariable long id) {
-			
-		List<User> l = new ArrayList<User>();
-	
+	public String opinar(Model model, @PathVariable long id, HttpServletRequest request) {
+		//recogemos el nombre del usuario real a través del srrvicio http
+		//buscamos su nombre en el repositorio
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
 		
+		//se declaran dos listas de donde se va a sacar la lista de todas las opiniones que el usuario ha realizado
+		//y la segunda lista para recoger el id del conductor
+		List<User> l = new ArrayList<User>();
 		List<Trip> t = new ArrayList<Trip>();
 
-		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
-			t.add(usuarioActual.getBtrip().get(i).getTrip());
-			repoTrip.save(usuarioActual.getBtrip().get(i).getTrip());
+		for(int i = 0; i<user.get().getBtrip().size(); i++) {
+			t.add(user.get().getBtrip().get(i).getTrip());
+			repoTrip.save(user.get().getBtrip().get(i).getTrip());
 		}
 		
-		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
-			l.add(usuarioActual.getBtrip().get(i).getTrip().GetConductor());
-			repo.save(usuarioActual.getBtrip().get(i).getTrip().GetConductor());
+		for(int i = 0; i<user.get().getBtrip().size(); i++) {
+			l.add(user.get().getBtrip().get(i).getTrip().GetConductor());
+			repo.save(user.get().getBtrip().get(i).getTrip().GetConductor());
 		}
-		
+		//se recoge el del que se va a opinar viaje
 		Optional<Trip> t2 = repoTrip.findById(id);
+		//se recoge el conductor de dicho viaje
 		Optional<User> l2= repo.findById(t2.get().GetConductor().getId());
 		
-		model.addAttribute("name", usuarioActual.getUsername());
+		model.addAttribute("name", user.get().getUsername());
 		model.addAttribute("opin",t2.get().GetConductor().getUsername());
 		model.addAttribute("IdConductor", l);
 		model.addAttribute("text", "");
@@ -207,16 +216,18 @@ public class GreetingController {
 	
 	@RequestMapping("/accionOpinar/{id}")
 	public String accionOpinar(Model model, @RequestParam String text ,
-			@PathVariable long id) {
+			@PathVariable long id, HttpServletRequest request) {
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
 		
 		Optional<Trip> t = repoTrip.findById(id);
 		
-		Opinions o2 = new Opinions(text,usuarioActual,t.get().GetConductor(), usuarioActual.getUsername(), t.get().GetConductor().getUsername());
-		usuarioActual.addOpinion(o2);
+		Opinions o2 = new Opinions(text,user.get(),t.get().GetConductor(), user.get().getUsername(), t.get().GetConductor().getUsername());
+		user.get().addOpinion(o2);
 		repoOpinion.save(o2);
 		
-		model.addAttribute("name", usuarioActual.getUsername());
-			
+		model.addAttribute("name", user.get().getUsername());
+		
 		return "main";
 	}
 	
@@ -235,7 +246,6 @@ public class GreetingController {
 		user.get().addTripP(t); //se añade a la lista de viajes publicados en el usuario
 		repoTrip.save(t); //se guarda el viaje en la BD
 		repo.save(user.get()); //se actualiza el usuario en la BD
-		
 		return "publish";
 
 	}
