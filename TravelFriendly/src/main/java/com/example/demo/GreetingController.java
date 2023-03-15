@@ -245,7 +245,6 @@ public class GreetingController {
 						@RequestParam String destiny, @RequestParam String date, HttpServletRequest request) {
 		
 		List <Optional<Trip>> tripDate = repoTrip.findByDate(date); //consultamos a la BD por fecha (así evitamos problemas de mayúsculas)
-		List <Trip> tripOutput = new ArrayList <Trip>(); //lista de viajes a mostrar, coinciden fecha, origen y destino (comprobar asientos libres)
 		List<Comprobacion> cTrip = new ArrayList<Comprobacion>(); //acordarse de los import
 		
 		for(int i = 0; i < tripDate.size(); i++) { //recorrer lista por fecha
@@ -253,31 +252,43 @@ public class GreetingController {
 					&&(tripDate.get(i).get().getDest().equalsIgnoreCase(destiny)) //el mismo destino
 					/*&&(tripDate.get(i).get().getConductorId()!=usuarioActual.getId())*/ //no esta publicado por el usuario
 					&&(tripDate.get(i).get().getSites()>0)) { //y tiene sitios libres
-				
-				tripOutput.add(tripDate.get(i).get()); //añadir a la lista de salida ese viaje
-				cTrip.add(new Comprobacion(tripDate.get(i).get()));
-			}
-		}
-		
-		String username = request.getUserPrincipal().getName();
-		Optional <User> user = repo.findByUsername(username);
-		
-		for (int i = 0; i < cTrip.size(); i++) {
-			if(cTrip.get(i).getTrip().getConductorId()==user.get().getId()) {
-				cTrip.get(i).setComp(true);
-			}
-		}
 
-		if(tripOutput.size()>0) { //si la lista de salida tiene algun viaje
-			model.addAttribute("searched", true);
-			model.addAttribute("resultados", cTrip); //se muestran los viajes
-			//model.addAttribute("comprobacion", cTrip);//Hay q pasarle la lista de comprobaciones para que no haga bucle doble y movidas
+				cTrip.add(new Comprobacion(tripDate.get(i).get())); //añadir a la lista de salida ese viaje
+			}
+		}
+		
+		String username;
+		Optional <User> user;
+		
+		try {
+			username = request.getUserPrincipal().getName();
+			user = repo.findByUsername(username);
+			
+			for (int i = 0; i < cTrip.size(); i++) {
+				if(cTrip.get(i).getTrip().getConductorId()==user.get().getId()) {
+					cTrip.get(i).setComp(true);
+				}
+			}
+		}catch(Exception e) {
+			username = null;
+		}
+		
+		if(cTrip.size()>0) { //si la lista de salida tiene algun viaje
+			if(username!=null) {
+				model.addAttribute("searched", true);
+				model.addAttribute("resultados", cTrip); //se muestran los viajes
+				model.addAttribute("visitor", false); //no es invitado
+			}
+			else {
+				model.addAttribute("searched", true);
+				model.addAttribute("resultados", cTrip); //se muestran los viajes
+				model.addAttribute("visitor", true); //es un invitado
+			}
 		}
 		else {//si no
 			model.addAttribute("searched", false);
 			model.addAttribute("error", "No se han encontrado resultados"); //se devuelve mensaje de error
 		}
-		
 		
 		return "search"; 
 	}
@@ -320,6 +331,6 @@ public class GreetingController {
 	@PostMapping("/signedUp")
 	public String registrarse(Model model, @RequestParam String username, @RequestParam String password, @RequestParam String mail) {
 		repo.save(new User(username, passwordEncoder.encode(password), mail,"USER"));
-		return "login";
+		return "index";
 	}
 }

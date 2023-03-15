@@ -42,6 +42,11 @@
 				<div class="titulo">Origen: </div>{{trip.origin}} 
 				<div class="titulo">Destino: </div>{{trip.destiny}} 
 				<div class="titulo">Fecha: </div>{{trip.date}}
+			{{#visitor}}
+				<br>Para comprar un viaje, necesita iniciar sesion
+				<br><a href="/"><button>Iniciar Sesion</button></a>
+			{{/visitor}}
+			{{^visitor}}
 				{{#comp}}
 					<br>No está permitido reservar un sitio en un viaje propio
 				{{/comp}}
@@ -52,6 +57,8 @@
 					<input type="hidden" name="_csrf" value="{{token}}"/>
 				</form>
 				{{/comp}}
+			{{/visitor}}
+				
 			</li>
 		{{/resultados}}	
 	</ul>
