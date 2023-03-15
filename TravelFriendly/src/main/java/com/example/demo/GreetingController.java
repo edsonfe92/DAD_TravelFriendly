@@ -142,8 +142,9 @@ public class GreetingController {
 	//ESta sera la unica forma e la cual podre listar (ya que no funcionan las listas) todos los mensajes pertenecientes a un chat
 	
 	@GetMapping("/perfil")
-	public String Perfil(Model model) {
+	public String Perfil(Model model, HttpServletRequest request) {
 	
+		Principal principal = request.getUserPrincipal();
 		List<Opinions> o = new ArrayList<Opinions>();
 		for(int i=0;i<usuarioActual.getOpinions().size();i++) {
 			o.add(usuarioActual.getOpinions().get(i));
@@ -151,22 +152,24 @@ public class GreetingController {
 		}
 		
 		model.addAttribute("opin", o);		
-		model.addAttribute("name", usuarioActual.getUsername());
+		model.addAttribute("name", principal.getName());
 	
 		return"profile";
 	
 	}
 	
 	@GetMapping("/tusViajes")
-	public String tusViajes(Model model) {
+	public String tusViajes(Model model, HttpServletRequest request) {
 
+		Principal principal = request.getUserPrincipal();
+			
 		List<Trip> t = new ArrayList<Trip>();
 		
 		for(int i = 0; i<usuarioActual.getBtrip().size(); i++) {
 			t.add(usuarioActual.getBtrip().get(i).getTrip());
 		}
 		
-		model.addAttribute("name", usuarioActual.getUsername());
+		model.addAttribute("name", principal.getName());
 		model.addAttribute("PTrip", usuarioActual.getPtrip());
 		model.addAttribute("BTrip", t);
 
