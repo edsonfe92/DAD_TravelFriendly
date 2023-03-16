@@ -5,9 +5,6 @@ import javax.persistence.*;
 import com.example.demo.model.Chat;
 
 
-
-
-
 @Entity
 public class User {
 
@@ -29,10 +26,19 @@ public class User {
 	@OneToMany(mappedBy="user")//He tocado esta
 	private List<Booking> Btrip= new ArrayList<Booking>();
 	
-	@OneToMany
+	@ManyToMany //Un usuario tiene multiples chats y un chat 2 usuarios (multiples tambien)
 	private List<Chat> chats;
 	
 	
+	public List<Chat> getChats() {
+		return chats;
+	}
+
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+	
+
 	//Lista de opiniones que tiene la gente del usuario
 	@OneToMany 
 	private List <Opinions> opinions = new ArrayList<Opinions>();;

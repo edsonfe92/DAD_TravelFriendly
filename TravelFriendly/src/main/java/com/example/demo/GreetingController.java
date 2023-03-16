@@ -111,27 +111,41 @@ public class GreetingController {
 	}
 	
 	@RequestMapping("/chat")
-	public String Chat(Model model) {
+	public String Chat(Model model,HttpServletRequest request) {
 		
-		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
+		Principal principal = request.getUserPrincipal();
+		
+		Optional<User> user = repo.findByUsername(principal.getName());
+		
+		model.addAttribute("chats", user.get().getChats()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		return "chat";
 	}
 	
 
 	@GetMapping("/chat/{id}")
-	public String Chats(Model model,@PathVariable long id) {
-		model.addAttribute("chats", repoChat.findAll()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
+	public String Chats(Model model,@PathVariable long id,HttpServletRequest request) {
+		
+		Principal principal = request.getUserPrincipal();
+		
+		Optional<User> user = repo.findByUsername(principal.getName());
+		
+		model.addAttribute("chats", user.get().getChats()); //esta haciendo la seleccion con todos los viajes existentes pero tendría que hacerlo con los comprados por el usuario
 		Optional<Chat> chat = repoChat.findById(id);
 		model.addAttribute("chat",chat.get());
 		return "chats";
 	}
 	
 	@PostMapping("/chat/{id}/SaveChats")
-	public String MensajeS(Model model, Message m,@PathVariable long id ) {
-		model.addAttribute("chats", repoChat.findAll());
+	public String MensajeS(Model model, Message m,@PathVariable long id,HttpServletRequest request ) {
+		
+		
+        Principal principal = request.getUserPrincipal();
+		Optional<User> user = repo.findByUsername(principal.getName());
+		
+		model.addAttribute("chats", user.get().getChats());
 		Optional<Chat> chat = repoChat.findById(id);
       
-		m.setDescripcion(usuarioActual.getUsername());
+		m.setDescripcion(user.get().getUsername());
 		chat.get().getMensg().add(m);
       
 		repoChat.save(chat.get());
@@ -384,9 +398,16 @@ public class GreetingController {
 		
 		repoBook.save(b); //guardar reserva en la BD
 		
-		Chat c = new Chat(t.get().GetConductor(), user.get()); //creamos el chat con el conductor y el usuario
-		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername()); //le añadimos la descripción
+		Chat c = new Chat(); //creamos el chat con el conductor y el usuario
+		
+		c.setDescripcion(t.get().getOr(),t.get().getDest(), t.get().GetConductor().getUsername(),user.get().getUsername()); //le añadimos la descripción
+
 		repoChat.save(c); //se guarda el chat en la BD
+		
+		t.get().GetConductor().getChats().add(c);
+		user.get().getChats().add(c);
+		repo.save(user.get());
+		repo.save(t.get().GetConductor());
 
 
 		
