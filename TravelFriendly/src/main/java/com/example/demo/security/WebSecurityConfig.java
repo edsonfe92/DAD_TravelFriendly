@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -43,12 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/Sesion").permitAll();
         http.authorizeRequests().antMatchers("/buscar").permitAll();
         http.authorizeRequests().antMatchers("/chat").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/chat/*").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST	,"/chat/**").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/publicar").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/perfil").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/tusViajes").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/opinar/*").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/accionOpinar/*").hasAnyRole("USER");
+
         // form login 
         http.formLogin().loginPage("/login");
         http.formLogin().usernameParameter("username");
