@@ -281,14 +281,14 @@ public class GreetingController {
 		Optional<Trip> t = repoTrip.findById(id);
 		//Optional<User> p =repo.findById(id2);
 		
-		for(int i = 0; i<user.get().getOpinions().size(); i++) {
-			Opinions o2 = new Opinions(text,user.get(),user.get().getOpinions().get(i).getDestiny(), user.get().getUsername(), user.get().getOpinions().get(i).getDestiny().getUsername());
+		//for(int i = 1; i<user.get().getOpinions().size(); i++) {
+		Opinions o2 = new Opinions(text,user.get(),t.get().getPasajeros().get(t.get().getPasajeros().size()-1), user.get().getUsername(), t.get().getPasajeros().get(t.get().getPasajeros().size()-1).getUsername());
 			user.get().addOpinion(o2);
 			
-			repoTrip.save(user.get().getPtrip().get(i));
+			//repoTrip.save(user.get().getPtrip().get(i));
 			
 			repoOpinion.save(o2);
-		}
+		//}
 		model.addAttribute("name", user.get().getUsername());
 		return "main";
 	}
