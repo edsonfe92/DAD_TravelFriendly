@@ -32,6 +32,8 @@ public class DatabaseInitalizer {
 		
 		rUser.save(new User("user", passwordEncoder.encode("pass"), "user@gmail.com","USER"));
 		rUser.save(new User("admin", passwordEncoder.encode("adminpass"), "admin@gmail.com", "USER", "ADMIN"));
+		rUser.save(new User("domingo", passwordEncoder.encode("pass"), "domingo@gmail.com","USER"));
+		
 		
 		User u1 = new User("Matias", passwordEncoder.encode("Sarajevo"), "sarajevo@gmail.com","USER");
 		User u2 = new User("Marcos", passwordEncoder.encode("Zagreb"), "zagreb@gmail.com","USER");

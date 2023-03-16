@@ -32,16 +32,12 @@
     
     <h4 TUS VIAJES class= "titulo" >
 		<ul class="formulario">
-			
-		
-
-   				
 						<div class="opinar" style="width: 100%; float: none;">
 				{{#PTrip}}
 					<li>[{{id}}]: Tu viaje de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
 					<br>
 					Opinar sobre el pasajero:    
-						<li><a href="/opinar/{{id}}"> {{#use}} {{username}} {{/use}} </a></li>
+						<li><a href="/opinarPasajero/{{id}}"> {{#use}} {{username}} {{/use}} </a></li>
 					
 				{{/PTrip}}	
 				{{#BTrip}}
@@ -50,7 +46,7 @@
 					<li>[{{id}}]: Tu reserva de origen: {{origin}} y destino: {{destiny}} en la fecha de: {{date}} </li>
 					<br>
 					Opinar sobre el conductor:    
-						<li><a href="/opinar/{{id}}"> {{nombreconductor}}</a></li>
+						<li><a href="/opinarConductor/{{id}}"> {{nombreconductor}}</a></li>
 			
 				{{/BTrip}}	
 				<input type="hidden" name="_csrf" value="{{token}}" />

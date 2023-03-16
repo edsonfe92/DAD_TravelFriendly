@@ -89,6 +89,14 @@ public class Trip {
 	public User GetConductor() {
 		return conductor;
 	}
+	
+	public List<User> getPasajeros() {
+		return use;
+	}
+	public void AddPasajeros(User p) {
+		use.add(p);
+	}
+	
 	public void SetConductor(User s) {
 		this.conductor = s ; 
 		nombreconductor = this.conductor.getUsername();
