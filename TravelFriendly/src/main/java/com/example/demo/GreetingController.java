@@ -191,14 +191,20 @@ public class GreetingController {
 		Optional <User> user = repo.findByUsername(username);
 		List<Trip> t = new ArrayList<Trip>();
 		List<Trip> t2 = new ArrayList<Trip>();
+		Optional <User> us = repo.findByUsername(username);
 		for(int i = 0; i<user.get().getBtrip().size(); i++) {
 			t.add(user.get().getBtrip().get(i).getTrip());
 			
 		}
 		
+	
+		
+		
 		model.addAttribute("name",user.get().getUsername());
 		model.addAttribute("PTrip", user.get().getPtrip());
+		//model.addAttribute("namePas", us.get().getUsername());
 		model.addAttribute("BTrip", t);
+		
 		return "yourTravel";
 	}
 	@GetMapping("/opinarConductor/{id}")
@@ -235,34 +241,41 @@ public class GreetingController {
 		return "opinion";
 	}
 	
-	@GetMapping("/opinarPasajero/{id}")
-	public String opinarP(Model model, @PathVariable long id, HttpServletRequest request) {
+	@GetMapping("/opinarPasajero/{us}")
+	public String opinarP(Model model, @PathVariable String us, HttpServletRequest request /*@PathVariable String usernm */) {
 		
 		//recogemos el nombre del usuario real a través del srrvicio http
 		//buscamos su nombre en el repositorio
 		
 		String username = request.getUserPrincipal().getName();
 		Optional <User> user = repo.findByUsername(username);
-		
+		//Optional <User> user2 = repo.findByUsername(usernm);
 		//se declaran dos listas de donde se va a sacar la lista de todas las opiniones que el usuario ha realizado
 		//y la segunda lista para recoger el id del conductor
 		List<User> l = new ArrayList<User>();
 		List<Trip> t = new ArrayList<Trip>();
-
+		Optional<User> user2 = repo.findByUsername(us);
+		/*
 		for(int i = 0; i<user.get().getPtrip().size(); i++) {
 			t.add(user.get().getPtrip().get(i));
 			repoTrip.save(user.get().getPtrip().get(i));
 		}
 		
 		for(int i = 0; i<user.get().getPtrip().size(); i++) {
-			l.add(user.get().getPtrip().get(i).getPasajeros().get(i));
-			repo.save(user.get().getPtrip().get(i).getPasajeros().get(i));
-		}
+			for(int j=0;j<user.get().getPtrip().get(i).getPasajeros().size();j++) {
+				
+			
+			l.add(user.get().getPtrip().get(i).getPasajeros().get(j));
+			repo.save(user.get().getPtrip().get(i).getPasajeros().get(j));
+			us=repo.findByUsername(user.get().getPtrip().get(i).getPasajeros().get(j).getUsername());
+			}
+		}*/
 		
 		//se recoge el del que se va a opinar viaje
-		Optional<Trip> t2 = repoTrip.findById(id);
+		//Optional<Trip> t2 = repoTrip.findById(id);
+		
 		model.addAttribute("name", user.get().getUsername());
-		model.addAttribute("opina", t2.get().getPasajeros());
+		model.addAttribute("us2", user2.get().getUsername());
 		model.addAttribute("IdPasajero", l);
 		
 		
@@ -286,23 +299,30 @@ public class GreetingController {
 		return "main";
 	}
 	
-	@RequestMapping("/accionOpinarPasajero/{id}")
+	@RequestMapping("/accionOpinarPasajero/{us}")
 	public String accionOpinarp(Model model, @RequestParam String text ,
-			@PathVariable long id, HttpServletRequest request/*, @PathVariable long id2*/) {
+			@PathVariable String us, HttpServletRequest request/*, @PathVariable long id2*/) {
 		String username = request.getUserPrincipal().getName();
 		Optional <User> user = repo.findByUsername(username);
 		
-		Optional<Trip> t = repoTrip.findById(id);
+		Optional<User> pasajero = repo.findByUsername(us);
+		Opinions o =  new Opinions(text,user.get(), pasajero.get(), user.get().getUsername(), pasajero.get().getUsername());
+		user.get().addOpinion(o);
+		
+		//repoTrip.save(user.get().getPtrip().get(i));
+		//repo.save(t.get().getPasajeros().get(t.get().getPasajeros().size()-1));
+		repoOpinion.save(o);
 		//Optional<User> p =repo.findById(id2);
 		
-		//for(int i = 1; i<user.get().getOpinions().size(); i++) {
-		Opinions o2 = new Opinions(text,user.get(),t.get().getPasajeros().get(t.get().getPasajeros().size()-1), user.get().getUsername(), t.get().getPasajeros().get(t.get().getPasajeros().size()-1).getUsername());
-			user.get().addOpinion(o2);
+		/*for(int i = 0; i<t.get().getPasajeros().size(); i++) {
+			Opinions o =  new Opinions(text,user.get(),t.get().getPasajeros().get(i), user.get().getUsername(), t.get().getPasajeros().get(i).getUsername());
+			user.get().addOpinion(o);
 			
 			//repoTrip.save(user.get().getPtrip().get(i));
-			
-			repoOpinion.save(o2);
-		//}
+			//repo.save(t.get().getPasajeros().get(t.get().getPasajeros().size()-1));
+			repoOpinion.save(o);
+		}*/
+		
 		model.addAttribute("name", user.get().getUsername());
 		return "main";
 	}
