@@ -101,6 +101,9 @@ public class GreetingController {
 	public String buscar(Model model) {
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "");
+		model.addAttribute("o", "");
+		model.addAttribute("d", "");
+		model.addAttribute("f", "");
 		return "search";
 	}
 	
@@ -254,25 +257,10 @@ public class GreetingController {
 		//y la segunda lista para recoger el id del conductor
 		List<User> l = new ArrayList<User>();
 		List<Trip> t = new ArrayList<Trip>();
+		//Para opinar sobre un pasajero en concreto y que no imprima la lista entera le pasamos
+				//el nombre de ese pasajero en vez de la id del viaje para opinar sobre él
+				//Para opinar sobre un conductor con la id del viaje es suficiente porque solo hay un conductor.
 		Optional<User> user2 = repo.findByUsername(us);
-		/*
-		for(int i = 0; i<user.get().getPtrip().size(); i++) {
-			t.add(user.get().getPtrip().get(i));
-			repoTrip.save(user.get().getPtrip().get(i));
-		}
-		
-		for(int i = 0; i<user.get().getPtrip().size(); i++) {
-			for(int j=0;j<user.get().getPtrip().get(i).getPasajeros().size();j++) {
-				
-			
-			l.add(user.get().getPtrip().get(i).getPasajeros().get(j));
-			repo.save(user.get().getPtrip().get(i).getPasajeros().get(j));
-			us=repo.findByUsername(user.get().getPtrip().get(i).getPasajeros().get(j).getUsername());
-			}
-		}*/
-		
-		//se recoge el del que se va a opinar viaje
-		//Optional<Trip> t2 = repoTrip.findById(id);
 		
 		model.addAttribute("name", user.get().getUsername());
 		model.addAttribute("us2", user2.get().getUsername());
@@ -305,23 +293,16 @@ public class GreetingController {
 		String username = request.getUserPrincipal().getName();
 		Optional <User> user = repo.findByUsername(username);
 		
+		//Para opinar sobre un pasajero en concreto y que no imprima la lista entera le pasamos
+		//el nombre de ese pasajero en vez de la id del viaje para opinar sobre él
+		//Para opinar sobre un conductor con la id del viaje es suficiente porque solo hay un conductor.
 		Optional<User> pasajero = repo.findByUsername(us);
 		Opinions o =  new Opinions(text,user.get(), pasajero.get(), user.get().getUsername(), pasajero.get().getUsername());
 		user.get().addOpinion(o);
 		
-		//repoTrip.save(user.get().getPtrip().get(i));
-		//repo.save(t.get().getPasajeros().get(t.get().getPasajeros().size()-1));
-		repoOpinion.save(o);
-		//Optional<User> p =repo.findById(id2);
 		
-		/*for(int i = 0; i<t.get().getPasajeros().size(); i++) {
-			Opinions o =  new Opinions(text,user.get(),t.get().getPasajeros().get(i), user.get().getUsername(), t.get().getPasajeros().get(i).getUsername());
-			user.get().addOpinion(o);
-			
-			//repoTrip.save(user.get().getPtrip().get(i));
-			//repo.save(t.get().getPasajeros().get(t.get().getPasajeros().size()-1));
-			repoOpinion.save(o);
-		}*/
+		repoOpinion.save(o);
+	
 		
 		model.addAttribute("name", user.get().getUsername());
 		return "main";
@@ -378,7 +359,9 @@ public class GreetingController {
 		}catch(Exception e) {
 			username = null;
 		}
-		
+		model.addAttribute("o", "");
+		model.addAttribute("d", "");
+		model.addAttribute("f", "");
 		if(cTrip.size()>0) { //si la lista de salida tiene algun viaje
 			if(username!=null) {
 				model.addAttribute("searched", true);
@@ -395,7 +378,7 @@ public class GreetingController {
 			model.addAttribute("searched", false);
 			model.addAttribute("error", "No se han encontrado resultados"); //se devuelve mensaje de error
 		}
-		
+	
 		return "search"; 
 	}
 	
@@ -432,7 +415,11 @@ public class GreetingController {
 
 		
 		model.addAttribute("searched", false);
-		model.addAttribute("error", "Reservado con éxito"); //En el hueco de error muestra que la reserva fue bien
+		model.addAttribute("error", "Reservado con éxito tu viaje:");
+		model.addAttribute("o", t.get().getOr());
+		model.addAttribute("d", t.get().getDest());
+		model.addAttribute("f", t.get().getDate());
+		//En el hueco de error muestra que la reserva fue bien
 		return "search";
 	}
 	
