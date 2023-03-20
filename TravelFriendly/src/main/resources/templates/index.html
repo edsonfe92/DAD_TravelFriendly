@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Friendly</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
 </head>
 
 <body>
@@ -26,14 +26,20 @@
 		<input type="submit" value="Acceder como Invitado">
 	</form>
 	
-	<p>¿No tienes una cuenta?</p>
+	<br><p>¿No tienes una cuenta?</p>
 	<a href="/inscribirse"><button>Crear cuenta</button></a>
+	
+	<br><br><p>¿Has olvidado tu contraseña?</p>
+	<a href="/recuperarContra"><button>Recuperar contraseña</button></a>
 	
 </div>
 
-<div class="passwordMal" style="text-align: center; padding-top: 10px;">
-    <p style="color: rgb(205, 20, 20);"></p>
+{{#code}}
+<div class="codeMal" style="text-align: center; padding-top: 10px;">
+    <p style="color: rgb(205, 20, 20);">Hubo un error al recuperar la contraseña</p>
 </div>
-
+{{/code}}
+{{^code}}
+{{/code}}
 </body>
 </html>

@@ -8,7 +8,7 @@ public class LoginWebController {
 	
 	@RequestMapping("/login")
 	public String login() {
-		return "login";
+		return "index"; //login
 	}
 
 	@RequestMapping("/loginerror")
