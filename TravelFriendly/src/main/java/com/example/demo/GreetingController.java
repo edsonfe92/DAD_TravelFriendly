@@ -30,7 +30,7 @@ import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
-
+import com.example.demo.service.EmailService;
 import com.example.demo.model.Chat;
 import com.example.demo.model.Comprobacion;
 import com.example.demo.model.Opinions;
@@ -58,6 +58,9 @@ public class GreetingController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private EmailService email;
 	
 	@Autowired
 	private PDFExportController pdfService;
@@ -465,6 +468,54 @@ public class GreetingController {
 	@PostMapping("/signedUp")
 	public String registrarse(Model model, @RequestParam String username, @RequestParam String password, @RequestParam String mail) {
 		repo.save(new User(username, passwordEncoder.encode(password), mail,"USER"));
+		return "index";
+	}
+	
+	@GetMapping("/recuperarContra")
+	public String recuperarContra() {
+		return "recoverCode";
+	}
+	
+	@PostMapping("/recuperarCodigo")
+	public String correoCodigo(Model model, @RequestParam String mail) {
+		
+		Optional<User> user = repo.findByMail(mail);
+		String destiny = user.get().getMail();
+		String subject = "Recuperar Contraseña";
+		String body = "Tu código de recuperación es: " + user.get().getCodeRec();
+		
+		email.sendMail(destiny, subject, body);
+		model.addAttribute("id", user.get().getId());
+		return "setCode";
+	}
+	
+	@PostMapping("/introducirContra/{id}")
+	public String introducirContra(Model model, @RequestParam String codeRec, @PathVariable long id) {
+		
+		int code = Integer.parseInt(codeRec);
+		int codeNew = (int) (Math.random() * 9998 + 1);
+		
+		Optional<User> user = repo.findById(id);
+		
+		if(user != null && user.get().getCodeRec()==code) {
+			user.get().setCodeRec(codeNew);
+			repo.save(user.get());
+			model.addAttribute("id", user.get().getId());
+			return "setPassword";
+		}
+		else {
+			model.addAttribute("code", true);
+			return "index";
+		}
+	}
+	
+	@PostMapping("/cambiarContra/{id}")
+	public String cambiarContra(Model model, @RequestParam String password, @PathVariable long id) {
+		
+		Optional<User> user = repo.findById(id);
+		user.get().setPassword(passwordEncoder.encode(password));
+		repo.save(user.get());
+		model.addAttribute("code", false);
 		return "index";
 	}
 }
