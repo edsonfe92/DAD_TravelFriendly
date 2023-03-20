@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.generarPDF.ListarReservaPDF;
+import com.example.demo.generarPDF.PDFExportController;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
@@ -56,6 +59,8 @@ public class GreetingController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private PDFExportController pdfService;
 	//Usuario que se encuentre iniciando la aplicacion
 	//De esta forma podremos acceder en todas las pantallas a los datos de este usuario sin necesidad de consultar la BD
 	private User usuarioActual = new User();
@@ -383,7 +388,7 @@ public class GreetingController {
 	}
 	
 	@PostMapping("/accionReserva") //metodo que se gestiona al reservar un viaje
-	public String comprar(Model model, @RequestParam long id, HttpServletRequest request) { //le llega el id del viaje de un formulario invisible en html
+	public String comprar(Model model, @RequestParam long id, HttpServletRequest request, HttpServletResponse response) throws Exception { //le llega el id del viaje de un formulario invisible en html
 		
 		Optional<Trip> t = repoTrip.findById(id); //recupera el viaje reservado
 
@@ -416,11 +421,39 @@ public class GreetingController {
 		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "Reservado con éxito tu viaje:");
+		model.addAttribute("id", id);
 		model.addAttribute("o", t.get().getOr());
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
+		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		//En el hueco de error muestra que la reserva fue bien
-		return "search";
+		return "descargaBillete";
+		
+	}
+	
+	@PostMapping("/accionReserva/descarga") //metodo que se gestiona al reservar un viaje
+	public String comprar2(Model model, @RequestParam long id, HttpServletRequest request, HttpServletResponse response) throws Exception { //le llega el id del viaje de un formulario invisible en html
+		
+		Optional<Trip> t = repoTrip.findById(id); //recupera el viaje reservado
+
+		String username = request.getUserPrincipal().getName();
+		Optional <User> user = repo.findByUsername(username);
+		
+		
+	
+
+
+		
+		model.addAttribute("searched", false);
+		model.addAttribute("error", "Reservado con éxito tu viaje:");
+		model.addAttribute("o", t.get().getOr());
+		model.addAttribute("id", id);
+		model.addAttribute("d", t.get().getDest());
+		model.addAttribute("f", t.get().getDate());
+		pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		//En el hueco de error muestra que la reserva fue bien
+		return "descargaBillete";
+		
 	}
 	
 	@GetMapping("/inscribirse")

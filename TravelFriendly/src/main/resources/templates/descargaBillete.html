@@ -67,7 +67,10 @@
     <ul>
 		{{error}}
 		{{o}} {{d}} {{f}}
-		
+		<form method="post" action="/accionReserva/descarga">
+			<input style="display: none;" type="text" name="id" id="id" value={{id}}>
+			<input type="submit" value="Descarga tu billete">
+			<input type="hidden" name="_csrf" value="{{token}}"/>
 	</ul>
 	{{/searched}}
 </div>
