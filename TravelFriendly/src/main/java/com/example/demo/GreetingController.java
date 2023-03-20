@@ -419,8 +419,14 @@ public class GreetingController {
 		user.get().getChats().add(c);
 		repo.save(user.get());
 		repo.save(t.get().GetConductor());
-
-
+		
+		String destiny = user.get().getMail();
+		String subject = "Resguardo viaje reservado";
+		String body = "Has reservado sitio en un viaje con destino " + t.get().getDest() + " con salida desde " + t.get().getOr()
+				+ " el día " + t.get().getDate() + "\n" + "Contacto del conductor: \n"
+				+ "Nombre de usuario: " + t.get().GetConductor().getUsername() + "\n" + "Correo: " +t.get().GetConductor().getMail();
+		
+		email.sendMail(destiny, subject, body);
 		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "Reservado con éxito tu viaje:");
