@@ -15,6 +15,7 @@ public class User {
 	private String username;
 	private String password;
 	private String mail;
+	private int codeRec;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -52,6 +53,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.mail = mail;
+		this.codeRec = (int) (Math.random() * 9998 + 1);
 		this.roles = List.of(roles);
 	}
 	public void setId(Long id) {
@@ -65,6 +67,12 @@ public class User {
 	}
 	public String getPassword() {
 		return password;
+	}
+	public int getCodeRec() {
+		return this.codeRec;
+	}
+	public void setCodeRec(int code) {
+		this.codeRec = code;
 	}
 	public List<String> getRoles() {
 		return roles;
@@ -101,6 +109,10 @@ public class User {
 	
 	public List<Opinions> getOpinions() {
 		return opinions;
+	}
+	
+	public String getMail() {
+		return this.mail;
 	}
 	
 	
