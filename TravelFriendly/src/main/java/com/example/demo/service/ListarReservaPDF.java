@@ -1,4 +1,4 @@
-package com.example.demo.generarPDF;
+package com.example.demo.service;
 
 import java.awt.Font;
 import java.io.IOException;

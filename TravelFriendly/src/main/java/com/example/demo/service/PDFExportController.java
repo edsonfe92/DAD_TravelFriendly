@@ -1,4 +1,4 @@
-package com.example.demo.generarPDF;
+package com.example.demo.service;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
