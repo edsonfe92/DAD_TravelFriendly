@@ -97,7 +97,7 @@ $ scp -i Ruta_clave_Privada Archivo.jar ubuntu@Dirección_IP_Flotante:/Ruta_Copi
 ```
 Utilizamos el comando scp que nos permite copiar archivos o directorios entre un sistema local y un sistema remoto. Este comando utiliza ssh para la transferencia de datos. 
 
-# Acceder a la máquina virtual 
+## Acceder a la máquina virtual 
 Para el acceso utilizaremos el protocolo SSH.
 ```
 $ ssh -i Ruta_Clave_Privada ubuntu@Dirección_IP_Flotante
