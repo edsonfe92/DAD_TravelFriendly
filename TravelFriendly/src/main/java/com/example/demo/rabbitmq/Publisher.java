@@ -26,7 +26,7 @@ public class Publisher {
 	
 
 	
-	@Scheduled(fixedRate = 1000)
+	/*@Scheduled(fixedRate = 1000)
 	public void sendPDF(HttpServletResponse response, String o, String d, String f, String u) throws IOException {
 		
 		
@@ -38,7 +38,7 @@ public class Publisher {
 		//System.out.println("publishToQueue: '" + data + "'");
 				
 		rabbitTemplate.convertAndSend("messages", array);
-	}
+	}*/
 	
 	public void sendMailData(String destiny, String subject, String body) {
 		

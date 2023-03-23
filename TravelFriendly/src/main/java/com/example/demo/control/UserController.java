@@ -77,7 +77,6 @@ public class UserController {
 	@GetMapping("/Sesion")
 	public String sesion(Model model) {
 		
-		
 		return "main";
 	}
 	

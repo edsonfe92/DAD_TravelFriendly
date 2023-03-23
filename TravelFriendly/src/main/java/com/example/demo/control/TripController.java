@@ -56,7 +56,7 @@ public class TripController {
 	private EmailService email;
 
 	@Autowired
-	private Publisher publisher;
+	private Publisher pub;
 
 	@GetMapping("/buscar")
 	public String buscar(Model model) {
@@ -187,7 +187,8 @@ public class TripController {
 				+ "Nombre de usuario: " + t.get().GetConductor().getUsername() + "\n" + "Correo: "
 				+ t.get().GetConductor().getMail();
 
-		email.sendMail(destiny, subject, body);
+		pub.sendMailData(destiny, subject, body);
+		//email.sendMail(destiny, subject, body);
 
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "Reservado con éxito tu viaje:");
@@ -215,7 +216,7 @@ public class TripController {
 		model.addAttribute("id", id);
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
-		publisher.sendPDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		//publisher.sendPDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		// En el hueco de error muestra que la reserva fue bien
 		return "descargaBillete";

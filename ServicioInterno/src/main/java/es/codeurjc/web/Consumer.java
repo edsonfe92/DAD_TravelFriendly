@@ -18,18 +18,20 @@ import org.slf4j.LoggerFactory;
 public class Consumer {
 	
 	@Autowired
-	EmailService mail;
+	EmailService email;
 
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
 	public void received(String[] message) {
 		
-		//System.out.println("Message: "+message[0]);
+		//System.out.println("Original");
 	}
 	
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
 	public void receivedMailData(String[] data) {
 		
-		System.out.println("Message: " + data[0]);
+		//email.sendMail(data[0], data[1], data[2]);
+		email.sendMail(data[0], "", "");
+		System.out.println("EMAIL");
 	}
 	
 }
