@@ -15,8 +15,9 @@ import org.slf4j.LoggerFactory;
 public class Consumer {
 
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
-	public void received(String message) {
+	public void received(String[] message) {
 		
-		System.out.println("Message: "+message);
+		System.out.println("Message: "+message[0]);
 	}
+	
 }
