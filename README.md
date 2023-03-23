@@ -79,3 +79,57 @@ Permite publicar una opinión sobre el usuario/conductor (y guardar en la BD) qu
 
 ### Diagrama de pantallas
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagrama.png)
+
+## Fase_3
+## Generación del jar
+Para la generación del jar podemos hacerlo por el IDE:  Run as ...> Maven install lo que nos generará un Fichero : `Fichero <nombreproyecto>_<version>.jar` en la carpeta target.
+También podemos hacerlo de manera más directa mediante línea de comandos : 
+```
+$ cd ~/TravelFriendly
+$ mvn package
+```
+Al igual que utilizando el IDE , el jar se encontrará en la carpeta target del proyecto.
+
+## Subir el jar a la máquina virtual
+Para subir el jar a la máquina virtual ejecutaremos el siguiente comando : 
+```
+$ scp -i Ruta_clave_Privada Archivo.jar ubuntu@Dirección_IP_Flotante:/Ruta_Copia
+```
+Utilizamos el comando scp que nos permite copiar archivos o directorios entre un sistema local y un sistema remoto. Este comando utiliza ssh para la transferencia de datos. 
+
+## Acceder a la máquina virtual 
+Para el acceso utilizaremos el protocolo SSH.
+```
+$ ssh -i Ruta_Clave_Privada ubuntu@Dirección_IP_Flotante
+```
+
+## Configuración de la máquina virtual 
+Suponiendo que tenemos una máquina virtual inicialmente vacia tendríamos que realizar las siguientes operaciones: 
+
+**Instalación del JDK**
+```
+$ sudo apt-get update
+# Para actualizar los paquetes de la máquina
+$sudo apt install openjdk-18-jre-headless
+# Instalación del JDK
+```
+**Instalación Mysql Server**
+```
+sudo apt-get install mysql-server
+#Instalación de Mysql
+mysql -u root -p 'Password'
+#Introducimos nuestra contraseña
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'nueva_contraseña';
+#Cambiamos la contraseña a la que tengamos especificada en nuestra aplicación 
+FLUSH PRIVILEGES;
+#Actualizamos los privilegios 
+create database dad;
+#Creamos nuestro schema vacio
+```
+
+## Ejecución Aplicación 
+Con todo lo anteriormente comentado , unicamente nos quedaria ejecutar nuestra aplicación. Para ello utilizaremos el siguiente comando: 
+```
+$ java -jar Archivo.jar
+```
+
