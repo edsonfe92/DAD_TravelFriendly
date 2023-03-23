@@ -29,7 +29,7 @@ public class Publisher {
 	@Scheduled(fixedRate = 1000)
 	public void sendPDF(HttpServletResponse response, String o, String d, String f, String u) throws IOException {
 		
-		pdfService.generatePDF(response, o, d, f, u);
+		
 		String  array []= new String[4];
 		array[0]=o;
 		array[1]=d;
