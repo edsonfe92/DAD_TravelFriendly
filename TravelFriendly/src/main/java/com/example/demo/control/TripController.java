@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.model.Booking;
 import com.example.demo.model.Chat;
 import com.example.demo.model.Comprobacion;
+import com.example.demo.model.ContainerHttp;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
 import com.example.demo.rabbitmq.Publisher;
@@ -209,14 +210,16 @@ public class TripController {
 
 		String username = request.getUserPrincipal().getName();
 		Optional<User> user = repo.findByUsername(username);
-
+		ContainerHttp c = new ContainerHttp(response);
+		
+		
 		model.addAttribute("searched", false);
 		model.addAttribute("error", "Reservado con éxito tu viaje:");
 		model.addAttribute("o", t.get().getOr());
 		model.addAttribute("id", id);
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
-		//publisher.sendPDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		pub.sendPDF(c, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		// En el hueco de error muestra que la reserva fue bien
 		return "descargaBillete";

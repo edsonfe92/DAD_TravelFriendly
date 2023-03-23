@@ -1,6 +1,9 @@
 package com.example.demo.rabbitmq;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,35 +13,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.model.ContainerHttp;
 import com.example.demo.service.PDFExportController;
 
 
 
 @Component
-public class Publisher {
+public class Publisher{
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
-	@Autowired
-	private PDFExportController pdfService;
+	
 	
 	
 	
 
 	
-	/*@Scheduled(fixedRate = 1000)
-	public void sendPDF(HttpServletResponse response, String o, String d, String f, String u) throws IOException {
+	//@Scheduled(fixedRate = 1000)
+	public void sendPDF(ContainerHttp c, String o, String d, String f, String u) throws IOException {
 		
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		ObjectOutputStream os = new ObjectOutputStream(bs);
+		os.writeObject(c);
+		os.close();
+		byte[] bytes = bs.toByteArray();
 		
-		String  array []= new String[4];
-		array[0]=o;
-		array[1]=d;
-		array[2]=f;
-		array[3]=u;
+		Object array []= new Object[6];
+		array[0]="pdf";
+		array[1]=o;
+		array[2]=d;
+		array[3]=f;
+		array[4]=u;
+		array[5]=bytes;
 		//System.out.println("publishToQueue: '" + data + "'");
 				
 		rabbitTemplate.convertAndSend("messages", array);
-	}*/
+	}
 	
 	public void sendMailData(String destiny, String subject, String body) {
 		

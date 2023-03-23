@@ -3,13 +3,18 @@ package es.codeurjc.web;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import es.codeurjc.web.service.ContainerHttp;
 import es.codeurjc.web.service.EmailService;
+import es.codeurjc.web.service.PDFExportController;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
 
 
 
@@ -20,14 +25,25 @@ public class Consumer {
 	@Autowired
 	EmailService email;
 	
+	@Autowired
+	PDFExportController pdfService;
+	
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
-	public void receivedMailData(String[] data) {
+	public void receivedMailData(Object[] data) throws IOException, ClassNotFoundException {
 		
-		if(data[0].equalsIgnoreCase("email")) {
-			email.sendMail(data[1], data[2], data[3]);
+		if(((String) data[0]).equalsIgnoreCase("email")) {
+			email.sendMail((String)data[1], (String)data[2], (String)data[3]);
 			//System.out.println("EMAIL");
+		}else if (((String) data[0]).equalsIgnoreCase("pdf")) {
+			//ContainerHttp c= (ContainerHttp) data[5];
+			ByteArrayInputStream bs = new ByteArrayInputStream((byte[]) data[5]);
+			ObjectInputStream is = new ObjectInputStream(bs);
+			ContainerHttp c = (ContainerHttp)is.readObject();
+			is.close();
+			pdfService.generatePDF(c.getResponse(), (String)data[1], (String)data[2], (String)data[3], (String)data[4]);
 		}
 		
 	}
+	
 	
 }
