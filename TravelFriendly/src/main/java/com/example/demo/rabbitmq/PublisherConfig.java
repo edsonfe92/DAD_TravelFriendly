@@ -8,13 +8,16 @@ import org.springframework.amqp.core.Queue;
 @Configuration
 public class PublisherConfig {
 	//valor del nombre de la cola en la que publicamos
-    @Value("${sacavix.queue.name}")
+	@Value("${colaDeMensajes.queue.name}")
+	private String message;
     //variable local para guardar nuestro mensaje
-    private String message;
+    
 
-    @Bean
+    
     //retornamos el mensaje de la cola
+    @Bean
     public Queue queue() {
+    	
         return new Queue(message, true);
     }
 
