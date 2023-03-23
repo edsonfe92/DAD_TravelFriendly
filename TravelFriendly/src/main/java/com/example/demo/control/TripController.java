@@ -22,6 +22,7 @@ import com.example.demo.model.Chat;
 import com.example.demo.model.Comprobacion;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
+import com.example.demo.rabbitmq.Publisher;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.OpinionsRepository;
@@ -55,7 +56,7 @@ public class TripController {
 	private EmailService email;
 
 	@Autowired
-	private PDFExportController pdfService;
+	private Publisher publisher;
 
 	@GetMapping("/buscar")
 	public String buscar(Model model) {
@@ -214,7 +215,8 @@ public class TripController {
 		model.addAttribute("id", id);
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
-		pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		publisher.sendPDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		// En el hueco de error muestra que la reserva fue bien
 		return "descargaBillete";
 
