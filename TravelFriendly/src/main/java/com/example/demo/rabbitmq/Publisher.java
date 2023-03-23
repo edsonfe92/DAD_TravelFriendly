@@ -25,6 +25,16 @@ public class Publisher {
 				
 		rabbitTemplate.convertAndSend("messages", data);
 	}
+	
+	public void sendMailData(String destiny, String subject, String body) {
+		
+		String [] dataMail = new String[3];
+		dataMail[0] = destiny;
+		dataMail[1] = subject;
+		dataMail[2] = body;
+		
+		rabbitTemplate.convertAndSend("messages", dataMail);
+	}
 }
      
      

@@ -1,4 +1,4 @@
-package es.service;
+package es.codeurjc.web.service;
 
 import java.awt.Font;
 import java.io.IOException;

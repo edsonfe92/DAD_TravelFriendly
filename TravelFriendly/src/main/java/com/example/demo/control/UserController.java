@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.User;
+import com.example.demo.rabbitmq.Publisher;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.OpinionsRepository;
@@ -48,6 +49,9 @@ public class UserController {
 	
 	@Autowired
 	private EmailService email;
+	
+	@Autowired
+	private Publisher pub;
 	
 	
 	@ModelAttribute
@@ -102,7 +106,8 @@ public class UserController {
 		String subject = "Recuperar Contraseña";
 		String body = "Tu código de recuperación es: " + user.get().getCodeRec();
 		
-		email.sendMail(destiny, subject, body);
+		pub.sendMailData(destiny, subject, body);
+		//email.sendMail(destiny, subject, body);
 		model.addAttribute("id", user.get().getId());
 		return "setCode";
 	}
