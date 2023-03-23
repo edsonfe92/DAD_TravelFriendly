@@ -42,10 +42,11 @@ public class Publisher {
 	
 	public void sendMailData(String destiny, String subject, String body) {
 		
-		String [] dataMail = new String[3];
-		dataMail[0] = destiny;
-		dataMail[1] = subject;
-		dataMail[2] = body;
+		String [] dataMail = new String[4];
+		dataMail[0] = "email";
+		dataMail[1] = destiny;
+		dataMail[2] = subject;
+		dataMail[3] = body;
 		
 		rabbitTemplate.convertAndSend("messages", dataMail);
 	}

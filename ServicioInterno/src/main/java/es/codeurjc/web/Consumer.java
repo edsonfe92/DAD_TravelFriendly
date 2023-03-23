@@ -19,19 +19,15 @@ public class Consumer {
 	
 	@Autowired
 	EmailService email;
-
-	@RabbitListener(queues = "messages", ackMode = "AUTO")
-	public void received(String[] message) {
-		
-		//System.out.println("Original");
-	}
 	
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
 	public void receivedMailData(String[] data) {
 		
-		//email.sendMail(data[0], data[1], data[2]);
-		email.sendMail(data[0], "", "");
-		System.out.println("EMAIL");
+		if(data[0].equalsIgnoreCase("email")) {
+			email.sendMail(data[1], data[2], data[3]);
+			//System.out.println("EMAIL");
+		}
+		
 	}
 	
 }
