@@ -1,8 +1,7 @@
 package es.codeurjc.web.service;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.context.annotation.Configuration;
+
 
 import com.lowagie.text.DocumentException;
 
@@ -11,17 +10,18 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.faces.context.FacesContext;
 
-@Controller
+
+@Configuration
 public class PDFExportController {
 
+	
     private final ListarReservaPDF pdfGeneratorService;
 
     public PDFExportController(ListarReservaPDF pdfGeneratorService) {
         this.pdfGeneratorService = pdfGeneratorService;
     }
-    
+   
     public void generatePDF( HttpServletResponse response, String o, String d, String f, String user) throws IOException {
 
         

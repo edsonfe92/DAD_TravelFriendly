@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +28,9 @@ import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
+
+import es.codeurjc.web.service.PDFExportController;
+
 
 
 @Controller
@@ -51,7 +53,10 @@ public class TripController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
+	
+	@Autowired
+	private PDFExportController pdfService;
 	
 
 	@Autowired
@@ -217,8 +222,8 @@ public class TripController {
 		model.addAttribute("id", id);
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
-		pub.sendPDF(t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
-		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		//pub.sendPDF(t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		// En el hueco de error muestra que la reserva fue bien
 		return "descargaBillete";
 

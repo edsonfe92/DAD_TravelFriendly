@@ -1,5 +1,8 @@
-{"properties": [{
-  "name": "colaDeMensajes.queue.name",
-  "type": "java.lang.String",
-  "description": "A description for 'colaDeMensajes.queue.name'"
-}]}
+{"properties": [
+  {
+    "name": "colaDeMensajes.queue.name",
+    "type": "java.lang.String",
+    "description": "A description for 'colaDeMensajes.queue.name'"
+  }
+ 
+]}

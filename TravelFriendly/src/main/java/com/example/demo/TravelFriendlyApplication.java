@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication 
+@SpringBootApplication(scanBasePackages={
+		"es.codeurjc.web.service", "com.example"})
 @EnableScheduling
 public class TravelFriendlyApplication {
 

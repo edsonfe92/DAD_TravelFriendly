@@ -24,7 +24,7 @@ public class Publisher{
 	RabbitTemplate rabbitTemplate;
 	
 	//@Scheduled(fixedRate = 1000)
-	public void sendPDF( String o, String d, String f, String u) throws IOException {
+	/*public void sendPDF( String o, String d, String f, String u) throws IOException {
 		
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		ObjectOutputStream os = new ObjectOutputStream(bs);
@@ -42,7 +42,7 @@ public class Publisher{
 		//System.out.println("publishToQueue: '" + data + "'");
 				
 		rabbitTemplate.convertAndSend("messages", array);
-	}
+	}*/
 	
 	public void sendMailData(String destiny, String subject, String body) {
 		
