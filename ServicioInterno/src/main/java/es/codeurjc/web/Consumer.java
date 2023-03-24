@@ -29,18 +29,18 @@ public class Consumer {
 	PDFExportController pdfService;
 	
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
-	public void receivedMailData(Object[] data) throws IOException, ClassNotFoundException {
+	public void receivedMailData(Object[] data,HttpServletResponse res) throws IOException, ClassNotFoundException {
 		
 		if(((String) data[0]).equalsIgnoreCase("email")) {
 			email.sendMail((String)data[1], (String)data[2], (String)data[3]);
 			//System.out.println("EMAIL");
 		}else if (((String) data[0]).equalsIgnoreCase("pdf")) {
 			//ContainerHttp c= (ContainerHttp) data[5];
-			ByteArrayInputStream bs = new ByteArrayInputStream((byte[]) data[5]);
-			ObjectInputStream is = new ObjectInputStream(bs);
-			ContainerHttp c = (ContainerHttp)is.readObject();
-			is.close();
-			pdfService.generatePDF(c.getResponse(), (String)data[1], (String)data[2], (String)data[3], (String)data[4]);
+			//ByteArrayInputStream bs = new ByteArrayInputStream((byte[]) data[5]);
+			//ObjectInputStream is = new ObjectInputStream(bs);
+			//ContainerHttp c = (ContainerHttp)is.readObject();
+			//is.close();
+			pdfService.generatePDF(res,(String)data[1], (String)data[2], (String)data[3], (String)data[4]);
 		}
 		
 	}

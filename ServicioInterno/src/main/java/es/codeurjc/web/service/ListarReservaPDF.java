@@ -1,12 +1,14 @@
 package es.codeurjc.web.service;
 
 import java.awt.Font;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +26,7 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
+import javax.faces.context.FacesContext;
 
 @Service
 public class ListarReservaPDF {
@@ -59,11 +61,37 @@ public class ListarReservaPDF {
 		document.add(p1);
 		document.add(p2);
 		document.close();
+	}
+	public void export(  String o, String d, String f, String user) throws DocumentException, IOException {
 		
+		Document document = new Document(PageSize.A4);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
 		
+		PdfWriter.getInstance(document, baos); 
+		//abrimos vista pdf
+		document.open();
+		//añadimos el texto que nos interesa:
+		
+
+		com.lowagie.text.Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		fontTitle.setSize(20);
+		
+		Paragraph p1= new Paragraph("Enhorabuena, tu reserva ha sido completada", fontTitle);
+		p1.setAlignment(Paragraph.ALIGN_CENTER);
+		
+		com.lowagie.text.Font fontParagraph= FontFactory.getFont(FontFactory.HELVETICA);
+		fontParagraph.setSize(14);
+		
+		Paragraph p2= new Paragraph("Hola "+user+" tu reserva es: "+o+"-"+d+": "+f+"", fontParagraph);
+		p2.setAlignment(Paragraph.ALIGN_CENTER);
+		document.add(p1);
+		document.add(p2);
+		//document.close();
 		
 		
 	}
+	
 	
 
 

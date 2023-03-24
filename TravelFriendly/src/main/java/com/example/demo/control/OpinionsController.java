@@ -26,7 +26,7 @@ import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.EmailService;
+
 
 @Controller
 public class OpinionsController {
@@ -49,8 +49,7 @@ public class OpinionsController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private EmailService email;
+
 	
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {

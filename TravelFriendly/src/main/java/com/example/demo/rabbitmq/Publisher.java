@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.model.ContainerHttp;
-import com.example.demo.service.PDFExportController;
 
 
 
@@ -24,18 +23,13 @@ public class Publisher{
 	@Autowired
 	RabbitTemplate rabbitTemplate;
 	
-	
-	
-	
-
-	
 	//@Scheduled(fixedRate = 1000)
-	public void sendPDF(ContainerHttp c, String o, String d, String f, String u) throws IOException {
+	public void sendPDF( String o, String d, String f, String u) throws IOException {
 		
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		ObjectOutputStream os = new ObjectOutputStream(bs);
-		os.writeObject(c);
-		os.close();
+		//os.writeObject(c);
+		//os.close();
 		byte[] bytes = bs.toByteArray();
 		
 		Object array []= new Object[6];
@@ -44,7 +38,7 @@ public class Publisher{
 		array[2]=d;
 		array[3]=f;
 		array[4]=u;
-		array[5]=bytes;
+		//array[5]=bytes;
 		//System.out.println("publishToQueue: '" + data + "'");
 				
 		rabbitTemplate.convertAndSend("messages", array);

@@ -29,8 +29,7 @@ import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.EmailService;
-import com.example.demo.service.PDFExportController;
+
 
 @Controller
 public class TripController {
@@ -53,8 +52,7 @@ public class TripController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private EmailService email;
+	
 
 	@Autowired
 	private Publisher pub;
@@ -219,7 +217,7 @@ public class TripController {
 		model.addAttribute("id", id);
 		model.addAttribute("d", t.get().getDest());
 		model.addAttribute("f", t.get().getDate());
-		pub.sendPDF(c, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
+		pub.sendPDF(t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		//pdfService.generatePDF(response, t.get().getOr(), t.get().getDest(), t.get().getDate(), username);
 		// En el hueco de error muestra que la reserva fue bien
 		return "descargaBillete";
