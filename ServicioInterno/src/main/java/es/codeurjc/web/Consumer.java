@@ -29,7 +29,7 @@ public class Consumer {
 	//PDFExportController pdfService;
 	
 	@RabbitListener(queues = "messages", ackMode = "AUTO")
-	public void receivedMailData(Object[] data,HttpServletResponse res) throws IOException, ClassNotFoundException {
+	public void receivedMailData(Object[] data) throws IOException, ClassNotFoundException {
 		
 		if(((String) data[0]).equalsIgnoreCase("email")) {
 			email.sendMail((String)data[1], (String)data[2], (String)data[3]);
