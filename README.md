@@ -37,7 +37,6 @@ Funcionalidades servicio interno:
 3. Generar reserva en el historial del usuario, al adquirir un sitio en un viaje.
 4. Chat entre conductor y usuario.
 
-## Fase_2
 ### Diagrama_E-R
 ![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/ER.jfif)
 
@@ -47,15 +46,51 @@ Funcionalidades servicio interno:
 ### Capturas de pantalla
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.JPG)
 
-Actualmente en la fase 2, con meter un usuario y una contraseña, genera el usuario para navegar por la app (y lo guarda en la BD).
+Ya en la fase 3, se necesita hacer log in para utilizar la aplicación. También se da la opción de entrar en modo invitado, crear una cuenta y recuperarla
 
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/main.JPG)
 
 Es una página de bienvenida, la aplicación saluda usando el nombre del usuario.
 
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/invitado.JPG)
+
+Se puede acceder como invitado.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/invitadoBuscador.JPG)
+
+En modo invitado, solo permite ver los viajes disponibles en el buscador, pero para comprarlo, solicitará que se inicie sesión.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/contraCorreo.JPG)
+
+Para recuperar la cuenta, se solicitará el correo con el que se inició sesión.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/contraCodigo.JPG)
+
+Después, se solicitará el código de recuperación que se ha mandado al correo.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/correoContra.JPG)
+
+Este es el correo de recuperación.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/contraNueva.JPG)
+
+Si el correo es correcto, se pide insertar una nueva contraseña.
+
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/buscador.JPG)
 
 Permite buscar viajes publicados en la web (por lo que están almacenados en la BD) y comprar un sitio en ese viaje.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/correoViaje.JPG)
+
+Ahora, al comprar un viaje, se envía un correo con los detalles del viaje.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/descargarPDF.JPG)
+
+Es una página de bienvenida, la aplicación saluda usando el nombre del usuario.
+
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/pdf.JPG)
+
+Este es el PDF.
 
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/publicar.JPG)
 
@@ -78,9 +113,15 @@ Muestra los viajes que ha publicado el usuario y los que ha comprado
 Permite publicar una opinión sobre el usuario/conductor (y guardar en la BD) que ha comprado/publicado el viaje.
 
 ### Diagrama de pantallas
-![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagrama.png)
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagramaF3.png)
 
 ## Fase_3
+## Interfaz Servicio Interno
+En un inicio, el servicio interno iba a incluir la funcionalidad tanto del correo electrónico como la de la generación de un PDF con los detalles del viaje comprado. Ambas funcionalidades están implementadas, pero por detalles de la implementación, el PDF no se pudo poner en el proceso separado del Servicio Interno.
+
+En el repositorio se incluyen ambos proyectos que se ejecutan por separado. Para poder comunicar el servicio web y el servicio interno, se ha implementado el servicio de RabbitMQ. COn esto, se tiene una clase Publisher en el servicio web, que manda mensajes a la cola que se ha definido. Ya en el proyecto del Servicio Interno, se tiene un script Consumer, que escucha en la cola de mensajes.
+
+Se manda mensajes al Servicio Interno cuando es necesario mandar un email, en el propio mensaje se envían los datos necesarios para generarlos. El PDF se ejecuta como un servicio dentro del proyecto web.
 ## Generación del jar
 Para la generación del jar podemos hacerlo por el IDE:  Run as ...> Maven install lo que nos generará un Fichero : `Fichero <nombreproyecto>_<version>.jar` en la carpeta target.
 También podemos hacerlo de manera más directa mediante línea de comandos : 
