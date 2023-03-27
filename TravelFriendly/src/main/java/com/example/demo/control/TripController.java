@@ -29,7 +29,7 @@ import com.example.demo.repository.OpinionsRepository;
 import com.example.demo.repository.TripRepository;
 import com.example.demo.repository.UserRepository;
 
-import es.codeurjc.web.service.PDFExportController;
+import com.example.demo.service.PDFExportController;
 
 
 
