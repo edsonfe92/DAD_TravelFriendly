@@ -171,10 +171,18 @@ FLUSH PRIVILEGES;
 create database dad;
 #Creamos nuestro schema vacio
 ```
+**Instalación RabbitMQ :**
+Debido a que nuesta aplicación utiliza una cola para enviar los correos del servicio interno, necesitamos instalar rabbitmq-server.
+```
+apt-get install rabbitmq-server
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server
+rabbitmq-plugins enable rabbitmq_management
+```
 
 ## Ejecución Aplicación 
 Con todo lo anteriormente comentado , unicamente nos quedaria ejecutar nuestra aplicación. Para ello utilizaremos el siguiente comando: 
 ```
-$ java -jar Archivo.jar
+$ java -jar Aplicacion.jar & java -jar ServicioInterno.jar 
 ```
 
