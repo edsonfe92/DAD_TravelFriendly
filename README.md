@@ -32,10 +32,13 @@ Actualización Fase 2: como no se ha podido hacer la diferenciacion entre las en
 6. Mensajes: contienen un string con el cuerpo del mensaje.
 
 Funcionalidades servicio interno:
-1. Envío de correo de electrónico al registrarse un usuario.
+1. Envío de correo de electrónico al comprar un sitio en un viaje.
 2. Envío de correo electrónico cuando el usuario indica que ha olvidado su contraseña.
 3. Generar reserva en el historial del usuario, al adquirir un sitio en un viaje.
 4. Chat entre conductor y usuario.
+
+Actualización Fase 3: 
+5. Se ha incluido una funcionalidad que, cuando se compre un sitio en un viaje, se descargue un PDF con los detalles del mismo.
 
 ### Diagrama_E-R
 ![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/ER.jfif)
