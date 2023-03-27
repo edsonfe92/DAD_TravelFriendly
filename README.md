@@ -45,7 +45,7 @@ Actualización Fase 3:
 ![Image Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/ER.jfif)
 
 ### Diagrama de clases
-![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagramaClases.jfif)
+![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/diagramaClases.png)
 
 ### Capturas de pantalla
 ![Image_Text](https://github.com/MegaTrece/DAD_TravelFriendly/blob/main/esquemas/login.JPG)
