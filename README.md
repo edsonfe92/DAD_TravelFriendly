@@ -38,6 +38,7 @@ Funcionalidades servicio interno:
 4. Chat entre conductor y usuario.
 
 Actualización Fase 3: 
+
 5. Se ha incluido una funcionalidad que, cuando se compre un sitio en un viaje, se descargue un PDF con los detalles del mismo.
 
 ### Diagrama_E-R
