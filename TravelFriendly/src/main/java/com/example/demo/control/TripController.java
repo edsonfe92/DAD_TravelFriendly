@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +60,8 @@ public class TripController {
 	
 	@Autowired
 	private PDFExportController pdfService;
-	
 
+	
 	@Autowired
 	private Publisher pub;
 
@@ -77,7 +80,8 @@ public class TripController {
 
 		return "publish";
 	}
-
+	//desalojamos caché porque cambian viajes
+	//@CacheEvict(value="tusViajes", allEntries=true)
 	@PostMapping("/accionPublicar") // metodo que gestiona cuando se publica un viaje
 	public String publicar(Model model, @RequestParam String origin, @RequestParam String destiny,
 			@RequestParam String date, @RequestParam int sites, @RequestParam int stops, @RequestParam String info,
@@ -91,7 +95,11 @@ public class TripController {
 		t.SetConductor(user.get()); // poner de conductor al usuario que ha publicado el viaje
 
 		user.get().addTripP(t); // se añade a la lista de viajes publicados en el usuario
+		
+		//SE DESALOJA CACHE AL PUBLICAR VIAJES, SE INVALIDA CAMBIA LA INFO
+		//CACHEEVICT INIT
 		repoTrip.save(t); // se guarda el viaje en la BD
+		//CACHEEVICT END
 		repo.save(user.get()); // se actualiza el usuario en la BD
 		return "publish";
 
@@ -151,8 +159,49 @@ public class TripController {
 
 		return "search";
 	}
+	
+	
+	//cachea todos los viajes
 
-	@PostMapping("/accionReserva") // metodo que se gestiona al reservar un viaje
+	/*@GetMapping(value= "/tusViajes")
+	public List<Trip> getTrips(){
+		return 
+	}*/
+	
+	
+	//@Cacheable("tusViajes")
+	@GetMapping("/tusViajes")
+	public String tusViajes(Model model, HttpServletRequest request) {
+
+		// recogemos el nombre del usuario real a través del srrvicio http
+		// buscamos su nombre en el repositorio
+		String username = request.getUserPrincipal().getName();
+		Optional<User> user = repo.findByUsername(username);
+		List<Trip> t = new ArrayList<Trip>();
+		
+		for (int i = 0; i < user.get().getBtrip().size(); i++) {
+			//Encuentra el viaje reservado(cacheable guarda valor en caché) a raiz del repositorio
+			//cacheable
+			Optional<Trip> tripB = repoTrip.findByConductor_Id(user.get().getBtrip().get(i).getTrip().getConductorId());
+			//end cacheable
+			t.add(user.get().getBtrip().get(i).getTrip());
+			
+		}
+		//cacheable
+		//encuentra el viaje publicado
+		Optional<Trip> tripP = repoTrip.findByConductor_Id(user.get().getId());
+		//end cacheable
+		repoTrip.findAll();
+		model.addAttribute("name", user.get().getUsername());
+		model.addAttribute("PTrip", user.get().getPtrip());
+		model.addAttribute("BTrip", t);
+
+		return "yourTravel";
+	}
+	
+	//desalojamos caché porque cambian viajes
+//	@CacheEvict(value="tusViajes", allEntries=true)
+	@PostMapping("/accionReserva") // metodo que se gestiona al reservar un viaje; ACTÚA AQUÍ LA CACHÉ SE DESALOJA
 	public String comprar(Model model, @RequestParam long id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception { // le llega el id del viaje de un formulario invisible en html
 
@@ -163,8 +212,14 @@ public class TripController {
 
 		t.get().buyTrip(); // resta un hueco libre al viaje
 		t.get().SetUsersinTrip(user.get()); // en la lista de usuarios del viaje mete al usuario
+		
+		//SAVE HA SIDO CAMBIADO, CADA VEZ QUE SE INVOCA AL METODO 
+		//SAVE DEL REPOSITORIO DE VIAJES ESTAREMOS DESALOJANDO LA CACHÉ!!!
+		//CACHEEVICT 
+		
 		repoTrip.save(t.get()); // volvemos a guardar el viaje en la BD
-
+		
+		
 		Booking b = new Booking(user.get(), t.get()); // creamos una reserva a nombre del usuario y se le mete el viaje
 		user.get().addTripB(b); // se añade la reserva al usuario
 		// t.get().AddPasajeros(user.get()); //se añade al viaje un pasajero xd
