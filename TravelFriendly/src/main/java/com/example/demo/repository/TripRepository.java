@@ -17,7 +17,7 @@ import com.example.demo.model.Trip;
 import com.example.demo.model.User;
 
 
-@CacheConfig(cacheNames="tusViajes")
+@CacheConfig(cacheNames="viajes")
 public interface TripRepository extends JpaRepository <Trip, Long>{
 	
 	//desaloja la caché ENTERA cuando salvas un viaje (esto es porque 
@@ -29,9 +29,9 @@ public interface TripRepository extends JpaRepository <Trip, Long>{
 	// Guarda el resultado del método en la caché que se haya
 	//configurado para la aplicación, asociado a los valores de
 	//los parámetros
-	@Cacheable
+	@Cacheable("viajes")
 	Optional<Trip> findByConductor_Id(long id);
-	@Cacheable
+	@Cacheable("viajes")
 	List<Trip> findAll();
 
 	List<Optional<Trip>> findByOrigin(String origin);

@@ -19,11 +19,16 @@ public class CacheController {
 	private CacheManager cacheManager;
 	
 	@GetMapping(value="/cacheViajes")
-	public Map<Object, Object> getCacheContent() {
+	public Map<Object, Object> getCacheContentViajes() {
 		ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
-		ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("tusViajes");
-		//System.out.print(cacheMgr.getCacheNames());
-		//System.out.print(cacheMgr.getCache("tusViajes"));
+		ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("viajes");
+		return cache.getNativeCache();
+	}
+	
+	@GetMapping(value="/cacheOpiniones")
+	public Map<Object, Object> getCacheContentOpiniones() {
+		ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
+		ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("opiniones");
 		return cache.getNativeCache();
 	}
 }

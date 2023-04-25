@@ -81,7 +81,6 @@ public class TripController {
 		return "publish";
 	}
 	//desalojamos caché porque cambian viajes
-	//@CacheEvict(value="tusViajes", allEntries=true)
 	@PostMapping("/accionPublicar") // metodo que gestiona cuando se publica un viaje
 	public String publicar(Model model, @RequestParam String origin, @RequestParam String destiny,
 			@RequestParam String date, @RequestParam int sites, @RequestParam int stops, @RequestParam String info,
@@ -169,7 +168,21 @@ public class TripController {
 	}*/
 	
 	
-	//@Cacheable("tusViajes")
+	
+	// Guarda el resultado del método en la caché que se haya
+		//configurado para la aplicación, asociado a los valores de
+		//los parámetros
+	
+	
+	
+	
+	//Guarda el resultado del metodo en la cache de viajes;
+	//un determinado usuario y todos los viajes
+	//name
+	//PTrip
+	//BTrip
+	
+	@Cacheable("viajes")
 	@GetMapping("/tusViajes")
 	public String tusViajes(Model model, HttpServletRequest request) {
 
@@ -182,16 +195,17 @@ public class TripController {
 		for (int i = 0; i < user.get().getBtrip().size(); i++) {
 			//Encuentra el viaje reservado(cacheable guarda valor en caché) a raiz del repositorio
 			//cacheable
-			Optional<Trip> tripB = repoTrip.findByConductor_Id(user.get().getBtrip().get(i).getTrip().getConductorId());
+			
+			//repoTrip.findByConductor_Id(user.get().getBtrip().get(i).getTrip().getConductorId());
 			//end cacheable
 			t.add(user.get().getBtrip().get(i).getTrip());
 			
 		}
 		//cacheable
 		//encuentra el viaje publicado
-		Optional<Trip> tripP = repoTrip.findByConductor_Id(user.get().getId());
+		//repoTrip.findByConductor_Id(user.get().getId());
 		//end cacheable
-		repoTrip.findAll();
+		//repoTrip.findAll();
 		model.addAttribute("name", user.get().getUsername());
 		model.addAttribute("PTrip", user.get().getPtrip());
 		model.addAttribute("BTrip", t);
@@ -200,7 +214,6 @@ public class TripController {
 	}
 	
 	//desalojamos caché porque cambian viajes
-//	@CacheEvict(value="tusViajes", allEntries=true)
 	@PostMapping("/accionReserva") // metodo que se gestiona al reservar un viaje; ACTÚA AQUÍ LA CACHÉ SE DESALOJA
 	public String comprar(Model model, @RequestParam long id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception { // le llega el id del viaje de un formulario invisible en html
@@ -216,7 +229,6 @@ public class TripController {
 		//SAVE HA SIDO CAMBIADO, CADA VEZ QUE SE INVOCA AL METODO 
 		//SAVE DEL REPOSITORIO DE VIAJES ESTAREMOS DESALOJANDO LA CACHÉ!!!
 		//CACHEEVICT 
-		
 		repoTrip.save(t.get()); // volvemos a guardar el viaje en la BD
 		
 		

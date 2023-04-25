@@ -21,8 +21,8 @@ import com.hazelcast.config.JoinConfig;
 @SpringBootApplication(scanBasePackages={
 		"es.codeurjc.web.service", "com.example"})
 @EnableScheduling
-@EnableCaching //Activamos cache
-@EnableHazelcastHttpSession
+@EnableCaching //Activamos caching
+//@EnableHazelcastHttpSession
 public class TravelFriendlyApplication {
 	
 	public static void main(String[] args) {
@@ -36,13 +36,8 @@ public class TravelFriendlyApplication {
 	}
 	//El cache manager nos sirve para comprobar que se aloja o desaloja en la caché
 	//basicamente un depurador para ver si funciona
-	@Bean
-    public CacheManager cacheManager() {
-		final Log LOG = LogFactory.getLog(this.getClass());
-		LOG.info("Activating cache...");
-    	return new ConcurrentMapCacheManager("tusViajes");
-    }
 	
+	/*
 	 @Bean
 	    public Config config() {
 
@@ -54,5 +49,12 @@ public class TravelFriendlyApplication {
 	        //joinConfig.getTcpIpConfig().setEnabled(true).setMembers(Collections.singletonList("127.0.0.1"));
 
 	        return config;
+	    }*/
+	 
+	 @Bean
+	    public CacheManager cacheManager() {
+			final Log LOG = LogFactory.getLog(this.getClass());
+			LOG.info("Activating cache...");
+	    	return new ConcurrentMapCacheManager("viajes","opiniones");
 	    }
 }

@@ -68,6 +68,7 @@ public class OpinionsController {
 		}
 	}
 
+	@Cacheable("opiniones")
 	@GetMapping("/perfil")
 	public String Perfil(Model model, HttpServletRequest request) {
 
@@ -154,7 +155,7 @@ public class OpinionsController {
 
 		return "opinionPasajero";
 	}
-
+	
 	@RequestMapping("/accionOpinarConductor/{id}")
 	public String accionOpinar(Model model, @RequestParam String text, @PathVariable long id,
 			HttpServletRequest request) {
@@ -166,6 +167,7 @@ public class OpinionsController {
 		Opinions o2 = new Opinions(text, user.get(), t.get().GetConductor(), user.get().getUsername(),
 				t.get().GetConductor().getUsername());
 		user.get().addOpinion(o2);
+		//DESALOJA CACHÉ DE OPINIONES:
 		repoOpinion.save(o2);
 
 		model.addAttribute("name", user.get().getUsername());
@@ -188,7 +190,7 @@ public class OpinionsController {
 		Opinions o = new Opinions(text, user.get(), pasajero.get(), user.get().getUsername(),
 				pasajero.get().getUsername());
 		user.get().addOpinion(o);
-
+		//DESALOJA CACHÉ DE OPINIONES:
 		repoOpinion.save(o);
 
 		model.addAttribute("name", user.get().getUsername());
