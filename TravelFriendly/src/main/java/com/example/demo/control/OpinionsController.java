@@ -67,7 +67,10 @@ public class OpinionsController {
 			model.addAttribute("userName","Invitado");
 		}
 	}
-
+	//Guarda el resultado del metodo en la cache de opiniones;
+		//el usuario que realiza la opinion, y la opinion que realiza
+		//OPIN Y name
+		
 	@Cacheable("opiniones")
 	@GetMapping("/perfil")
 	public String Perfil(Model model, HttpServletRequest request) {

@@ -17,14 +17,14 @@ public class CacheController {
 	
 	@Autowired
 	private CacheManager cacheManager;
-	
+	//devuelve el contenido actual de la cache de viajes en LA SIGUIENTE URL
 	@GetMapping(value="/cacheViajes")
 	public Map<Object, Object> getCacheContentViajes() {
 		ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
 		ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("viajes");
 		return cache.getNativeCache();
 	}
-	
+	//devuelve el contenido actual de la cache de opiniones en LA SIGUIENTE URL
 	@GetMapping(value="/cacheOpiniones")
 	public Map<Object, Object> getCacheContentOpiniones() {
 		ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
