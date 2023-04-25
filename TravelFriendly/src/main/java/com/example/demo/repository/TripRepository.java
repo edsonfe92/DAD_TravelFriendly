@@ -16,22 +16,18 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Trip;
 import com.example.demo.model.User;
 
-
+//nombre de la cache viajes
 @CacheConfig(cacheNames="viajes")
 public interface TripRepository extends JpaRepository <Trip, Long>{
 	
 	//desaloja la caché ENTERA cuando salvas un viaje (esto es porque 
-	//cuando la caché se modifica se tiene que invalidar.
+	//cuando la caché se modifica se tiene que invalidar porque sino
+	//empezaría a devolver un valor que no se corresponde con el actual.
 	@CacheEvict(allEntries=true)
 	Trip save(Trip trip);
-	//Habilita la caché (guarda todos los viajes por id de conductor para 
 	
-	// Guarda el resultado del método en la caché que se haya
-	//configurado para la aplicación, asociado a los valores de
-	//los parámetros
-	@Cacheable("viajes")
+	
 	Optional<Trip> findByConductor_Id(long id);
-	@Cacheable("viajes")
 	List<Trip> findAll();
 
 	List<Optional<Trip>> findByOrigin(String origin);
